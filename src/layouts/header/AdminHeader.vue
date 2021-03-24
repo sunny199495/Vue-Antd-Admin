@@ -13,12 +13,7 @@
       <div :class="['admin-header-right', headerTheme]">
         <header-notice class="header-item" />
         <header-avatar class="header-item" />
-        <a-dropdown class="lang header-item">
-          <div><a-icon type="global" /> {{ langAlias }}</div>
-          <a-menu @click="(val) => setLang(val.key)" :selected-keys="[lang]" slot="overlay">
-            <a-menu-item v-for="lang in langList" :key="lang.key">{{ lang.name }}</a-menu-item>
-          </a-menu>
-        </a-dropdown>
+        <header-lang class="header-item" />
       </div>
     </div>
   </a-layout-header>
@@ -27,12 +22,13 @@
 <script>
 import HeaderNotice from "./HeaderNotice";
 import HeaderAvatar from "./HeaderAvatar";
+import HeaderLang from "./HeaderLang";
 import IMenu from "@/components/menu/menu";
 import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "AdminHeader",
-  components: { IMenu, HeaderAvatar, HeaderNotice },
+  components: { IMenu, HeaderAvatar, HeaderNotice, HeaderLang },
   props: ["collapsed", "menuData"],
   data() {
     return {

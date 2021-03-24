@@ -22,7 +22,7 @@
       </a-spin>
     </div>
     <span @click="fetchNotice" class="header-notice">
-      <a-badge class="notice-badge" count="12">
+      <a-badge class="notice-badge" :count="count">
         <a-icon :class="['header-notice-icon']" type="bell" />
       </a-badge>
     </span>
@@ -38,6 +38,7 @@ export default {
       loading: false,
       show: false,
       list: [],
+      count: 0,
     };
   },
   computed: {},
@@ -63,6 +64,7 @@ export default {
         console.log(res.data);
         if (res.data.code == 200) {
           this.list = res.data.data.pageData;
+          if (this.list && this.list.length) this.count = this.list.length;
         }
       });
     },

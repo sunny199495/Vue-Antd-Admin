@@ -13,7 +13,7 @@
       <div :class="['admin-header-right', headerTheme]">
         <header-notice class="header-item" />
         <header-avatar class="header-item" />
-        <header-lang class="header-item" />
+        <!-- <header-lang class="header-item" /> -->
       </div>
     </div>
   </a-layout-header>
@@ -22,13 +22,13 @@
 <script>
 import HeaderNotice from "./HeaderNotice";
 import HeaderAvatar from "./HeaderAvatar";
-import HeaderLang from "./HeaderLang";
+// import HeaderLang from "./HeaderLang";
 import IMenu from "@/components/menu/menu";
 import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "AdminHeader",
-  components: { IMenu, HeaderAvatar, HeaderNotice, HeaderLang },
+  components: { IMenu, HeaderAvatar, HeaderNotice },
   props: ["collapsed", "menuData"],
   data() {
     return {

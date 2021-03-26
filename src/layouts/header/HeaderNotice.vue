@@ -1,37 +1,31 @@
 <template>
-  <a-dropdown :trigger="['click']" v-model="show" @visibleChange="visibleChange">
-    <div slot="overlay">
-      <a-spin :spinning="loading">
-        <a-tabs class="dropdown-tabs" :tabBarStyle="{ textAlign: 'center' }" :style="{ width: '297px' }">
-          <a-tab-pane tab="通知" key="1">
-            <a-list class="tab-pane">
-              <a-list-item v-for="(item, index) in list" :key="index">
-                <a-list-item-meta :title="item.title" :description="item.content">
-                  <a-avatar style="background-color: white" slot="avatar" src="https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png" />
-                </a-list-item-meta>
-              </a-list-item>
-            </a-list>
-          </a-tab-pane>
-          <a-tab-pane tab="消息" key="2">
-            <a-list class="tab-pane"></a-list>
-          </a-tab-pane>
-          <a-tab-pane tab="待办" key="3">
-            <a-list class="tab-pane"></a-list>
-          </a-tab-pane>
-        </a-tabs>
-      </a-spin>
-    </div>
-    <span @click="fetchNotice" class="header-notice">
+  <div>
+    <span @click="showDrawer" class="header-notice">
       <a-badge class="notice-badge" :count="count">
         <a-icon :class="['header-notice-icon']" type="bell" />
       </a-badge>
     </span>
-  </a-dropdown>
+    <a-drawer placement="right" :closable="false" :visible="visible" :after-visible-change="afterVisibleChange" @close="onClose">
+      <a-spin :spinning="spining">
+        <a-list class="list">
+          <a-list-item v-for="(item, index) in list" :key="index" class="list-item">
+            <model1 :item="item" />
+            <model2 :item="item" />
+            <model3 :item="item" />
+          </a-list-item>
+        </a-list>
+      </a-spin>
+    </a-drawer>
+  </div>
 </template>
 
 <script>
 import { messageList } from "@/services/test";
+import model1 from "@/components/MessageCenter/model1.vue";
+import model2 from "@/components/MessageCenter/model2.vue";
+import model3 from "@/components/MessageCenter/model3.vue";
 export default {
+  components: { model1, model2, model3 },
   name: "HeaderNotice",
   data() {
     return {
@@ -39,27 +33,28 @@ export default {
       show: false,
       list: [],
       count: 0,
+      visible: false,
+      spining: true,
     };
   },
   computed: {},
   methods: {
-    fetchNotice() {
-      if (this.loading) {
-        this.loading = false;
-        return;
-      }
-      this.loadding = true;
-      setTimeout(() => {
-        this.loadding = false;
-      }, 1000);
+    showDrawer() {
+      this.visible = true;
     },
-    visibleChange(visible) {
+    onClose() {
+      this.visible = false;
+    },
+    afterVisibleChange(visible) {
       if (visible) {
         this.getMessageList();
+      } else {
+        this.spining = true;
       }
     },
     getMessageList() {
       messageList().then((value) => {
+        this.spining = false;
         const res = JSON.parse(JSON.stringify(value));
         console.log(res.data);
         if (res.data.code == 200) {
@@ -87,13 +82,12 @@ export default {
     }
   }
 }
-.dropdown-tabs {
-  background-color: @base-bg-color;
-  box-shadow: 0 2px 8px @shadow-color;
-  border-radius: 4px;
-  .tab-pane {
-    padding: 0 24px 12px;
-    min-height: 250px;
+.ant-drawer {
+  .ant-drawer-body {
+    padding: 0;
+  }
+  .list .list-item {
+    padding: 10px 20px;
   }
 }
 </style>

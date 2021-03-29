@@ -21,6 +21,30 @@ const options = {
       component: () => import("@/pages/exception/403"),
     },
     {
+      path: "/message",
+      name: "消息中心",
+      component: TabsView,
+      redirect: "/login",
+      children: [
+        {
+          path: "list",
+          name: "消息列表",
+          meta: {
+            icon: "dashboard",
+          },
+          component: () => import("@/pages/message/list"),
+        },
+        {
+          path: "detail",
+          name: "消息详情",
+          meta: {
+            icon: "dashboard",
+          },
+          component: () => import("@/pages/message/detail"),
+        },
+      ],
+    },
+    {
       path: "/",
       name: "首页",
       component: TabsView,

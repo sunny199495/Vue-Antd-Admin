@@ -9,9 +9,7 @@
       <a-spin :spinning="spining">
         <a-list class="list">
           <a-list-item v-for="(item, index) in list" :key="index" class="list-item">
-            <model1 :item="item" />
-            <model2 :item="item" />
-            <model3 :item="item" />
+            <list-model :item="item" />
           </a-list-item>
         </a-list>
       </a-spin>
@@ -21,11 +19,9 @@
 
 <script>
 import { messageList } from "@/services/test";
-import model1 from "@/components/MessageCenter/model1.vue";
-import model2 from "@/components/MessageCenter/model2.vue";
-import model3 from "@/components/MessageCenter/model3.vue";
+import ListModel from "@/components/Message/ListModel";
 export default {
-  components: { model1, model2, model3 },
+  components: { ListModel },
   name: "HeaderNotice",
   data() {
     return {

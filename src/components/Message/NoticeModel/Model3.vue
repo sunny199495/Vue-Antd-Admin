@@ -8,9 +8,9 @@
           <div class="time">{{ item.templateValue.time }}</div>
           <div class="content-bg">
             <div class="content">
-              <span class="address"><icon-font type="iconweizhi" />{{ item.templateValue.title.place }}</span>
+              <span><icon-font type="iconweizhi" />{{ item.templateValue.title.place }}</span>
               <span>发生</span>
-              <span class="level"> <a-icon type="warning" />{{ item.templateValue.title.levelName }} </span>
+              <span class="level"><a-icon type="warning" />{{ item.templateValue.title.levelName }} </span>
               <span>告警</span>
               <span>,</span>
               <span>请尽快处理</span>
@@ -53,6 +53,8 @@ export default {
 
 <style lang="less" scoped>
 .content-bg {
+  background: @error-color;
+  color: @body-background;
   .level {
     color: @warning-color;
   }

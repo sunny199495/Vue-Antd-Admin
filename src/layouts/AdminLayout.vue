@@ -49,12 +49,12 @@ export default {
       drawerOpen: false,
       list: [
         {
-          templateCode: 1,
+          templateCode: 3,
           templateValue: {
             msgId: "437128537104381278302178432",
             title: {
               place: "国家软件园摩羯座",
-              level: 1,
+              level: 3,
             },
             source: {
               name: "安全管家",

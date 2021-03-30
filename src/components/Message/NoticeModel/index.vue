@@ -10,6 +10,7 @@
 import Model1 from "./Model1";
 import Model2 from "./Model2";
 import Model3 from "./Model3";
+import { safeLevel } from "@/utils/util";
 
 export default {
   props: {
@@ -20,12 +21,7 @@ export default {
   },
   components: { Model1, Model2, Model3 },
   created() {
-    console.log(this.item);
-    if (this.item.templateValue.title.level == 1) return (this.item.templateValue.title.levelName = "一级");
-    else if (this.item.templateValue.title.level == 2) return (this.item.templateValue.title.levelName = "二级");
-    else if (this.item.templateValue.title.level == 3) return (this.item.templateValue.title.levelName = "三级");
-    else if (this.item.templateValue.title.level == 4) return (this.item.templateValue.title.levelName = "四级");
-    else return (this.item.templateValue.title.levelName = "五级");
+    this.item.templateValue.title.levelName = safeLevel(this.item);
   },
 };
 </script>

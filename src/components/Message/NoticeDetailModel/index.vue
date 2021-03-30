@@ -6,6 +6,7 @@
 
 <script>
 import Model1 from "./Model1";
+import { safeLevel } from "@/utils/util";
 
 export default {
   props: {
@@ -15,5 +16,8 @@ export default {
     },
   },
   components: { Model1 },
+  created() {
+    this.item.templateValue.title.levelName = safeLevel(this.item);
+  },
 };
 </script>

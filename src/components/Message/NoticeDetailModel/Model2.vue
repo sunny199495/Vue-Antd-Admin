@@ -68,27 +68,9 @@ export default {
   height: 80vh;
   padding: 10px;
   .header {
-    display: flex;
     line-height: 30px;
-    position: relative;
-    padding-bottom: 10px;
+    text-align: center;
     border-bottom: 1px solid #ededed;
-    .time {
-      border: 1px solid #ededed;
-      padding: 0 5px;
-      border-radius: 4px;
-    }
-    .title {
-      font-weight: bold;
-      margin-left: 20px;
-    }
-    .msgId {
-      position: absolute;
-      right: 0;
-      border: 1px solid #ededed;
-      padding: 0 5px;
-      border-radius: 4px;
-    }
   }
   .msg-content {
     padding: 15px 0;

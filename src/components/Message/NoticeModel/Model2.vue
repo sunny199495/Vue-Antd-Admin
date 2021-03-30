@@ -51,6 +51,6 @@ export default {
 
 <style lang="less" scoped>
 .level {
-  color: @error-color;
+  color: @warning-color;
 }
 </style>

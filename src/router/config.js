@@ -61,11 +61,6 @@ const options = {
             {
               path: "workplace",
               name: "工作台",
-              meta: {
-                page: {
-                  closable: false,
-                },
-              },
               component: () => import("@/pages/dashboard/workplace"),
             },
             {

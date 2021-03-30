@@ -1,0 +1,51 @@
+.notice {
+  position: relative;
+  .ant-modal-body {
+    padding: 50px 0 20px 0;
+    .img {
+      width: 80px;
+      height: 80px;
+      background: @layout-bg-color;
+      border-radius: 50%;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      margin-left: -40px;
+      border: 4px solid @body-background;
+    }
+    .message {
+      text-align: center;
+      .person {
+        font-weight: bold;
+      }
+      .time {
+        color: @text-color-secondary;
+        margin: 5px 0;
+      }
+      .content {
+        /* 这里要显示的设置宽度 */
+        overflow: hidden;
+        white-space: nowrap;
+        /* 文字超出宽度则显示ellipsis省略号 */
+        text-overflow: ellipsis;
+        width: 300px;
+        margin: 0 auto;
+        font-weight: bold;
+        span {
+          margin: 0 2px;
+        }
+        .address {
+          color: @primary-color;
+        }
+      }
+    }
+    .close {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      margin-left: -15px;
+      color: @body-background;
+      font-size: 30px;
+    }
+  }
+}

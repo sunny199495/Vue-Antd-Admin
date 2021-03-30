@@ -1,17 +1,18 @@
-import config from '@/config'
-import {ADMIN} from '@/config/default'
-import {formatFullPath} from '@/utils/i18n'
-import {filterMenu} from '@/utils/authority-utils'
-import {getLocalSetting} from '@/utils/themeUtil'
+import config from "@/config";
+import { ADMIN } from "@/config/default";
+import { formatFullPath } from "@/utils/i18n";
+import { filterMenu } from "@/utils/authority-utils";
+import { getLocalSetting } from "@/utils/themeUtil";
 
-const localSetting = getLocalSetting(true)
-const customTitlesStr = sessionStorage.getItem(process.env.VUE_APP_TBAS_TITLES_KEY)
-const customTitles = (customTitlesStr && JSON.parse(customTitlesStr)) || []
+const localSetting = getLocalSetting(true);
+const customTitlesStr = sessionStorage.getItem(process.env.VUE_APP_TBAS_TITLES_KEY);
+const customTitles = (customTitlesStr && JSON.parse(customTitlesStr)) || [];
 
 export default {
   namespaced: true,
   state: {
     isMobile: false,
+    isNotice: false,
     animates: ADMIN.animates,
     palettes: ADMIN.palettes,
     pageMinHeight: 0,
@@ -19,95 +20,98 @@ export default {
     activatedFirst: undefined,
     customTitles,
     ...config,
-    ...localSetting
+    ...localSetting,
   },
   getters: {
     menuData(state, getters, rootState) {
       if (state.filterMenu) {
-        const {permissions, roles} = rootState.account
-        return filterMenu(state.menuData, permissions, roles)
+        const { permissions, roles } = rootState.account;
+        return filterMenu(state.menuData, permissions, roles);
       }
-      return state.menuData
+      return state.menuData;
     },
     firstMenu(state) {
-      const {menuData} = state
+      const { menuData } = state;
       if (menuData.length > 0 && !menuData[0].fullPath) {
-        formatFullPath(menuData)
+        formatFullPath(menuData);
       }
-      return menuData.map(item => {
-        const menuItem = {...item}
-        delete menuItem.children
-        return menuItem
-      })
+      return menuData.map((item) => {
+        const menuItem = { ...item };
+        delete menuItem.children;
+        return menuItem;
+      });
     },
     subMenu(state) {
-      const {menuData, activatedFirst} = state
+      const { menuData, activatedFirst } = state;
       if (menuData.length > 0 && !menuData[0].fullPath) {
-        formatFullPath(menuData)
+        formatFullPath(menuData);
       }
-      const current = menuData.find(menu => menu.fullPath === activatedFirst)
-      return current && current.children || []
-    }
+      const current = menuData.find((menu) => menu.fullPath === activatedFirst);
+      return (current && current.children) || [];
+    },
   },
   mutations: {
-    setDevice (state, isMobile) {
-      state.isMobile = isMobile
+    setDevice(state, isMobile) {
+      state.isMobile = isMobile;
     },
-    setTheme (state, theme) {
-      state.theme = theme
+    setNotice(state, isNotice) {
+      state.isNotice = isNotice;
     },
-    setLayout (state, layout) {
-      state.layout = layout
+    setTheme(state, theme) {
+      state.theme = theme;
     },
-    setMultiPage (state, multiPage) {
-      state.multiPage = multiPage
+    setLayout(state, layout) {
+      state.layout = layout;
     },
-    setAnimate (state, animate) {
-      state.animate = animate
+    setMultiPage(state, multiPage) {
+      state.multiPage = multiPage;
+    },
+    setAnimate(state, animate) {
+      state.animate = animate;
     },
     setWeekMode(state, weekMode) {
-      state.weekMode = weekMode
+      state.weekMode = weekMode;
     },
     setFixedHeader(state, fixedHeader) {
-      state.fixedHeader = fixedHeader
+      state.fixedHeader = fixedHeader;
     },
     setFixedSideBar(state, fixedSideBar) {
-      state.fixedSideBar = fixedSideBar
+      state.fixedSideBar = fixedSideBar;
     },
     setLang(state, lang) {
-      state.lang = lang
+      state.lang = lang;
     },
     setHideSetting(state, hideSetting) {
-      state.hideSetting = hideSetting
+      state.hideSetting = hideSetting;
     },
     correctPageMinHeight(state, minHeight) {
-      state.pageMinHeight += minHeight
+      state.pageMinHeight += minHeight;
     },
     setMenuData(state, menuData) {
-      state.menuData = menuData
+      state.menuData = menuData;
     },
     setAsyncRoutes(state, asyncRoutes) {
-      state.asyncRoutes = asyncRoutes
+      state.asyncRoutes = asyncRoutes;
     },
     setPageWidth(state, pageWidth) {
-      state.pageWidth = pageWidth
+      state.pageWidth = pageWidth;
     },
     setActivatedFirst(state, activatedFirst) {
-      state.activatedFirst = activatedFirst
+      state.activatedFirst = activatedFirst;
     },
     setFixedTabs(state, fixedTabs) {
-      state.fixedTabs = fixedTabs
+      state.fixedTabs = fixedTabs;
     },
-    setCustomTitle(state, {path, title}) {
+    setCustomTitle(state, { path, title }) {
       if (title) {
-        const obj = state.customTitles.find(item => item.path === path)
+        const obj = state.customTitles.find((item) => item.path === path);
         if (obj) {
-          obj.title = title
+          obj.title = title;
         } else {
-          state.customTitles.push({path, title})
+          state.customTitles.push({ path, title });
         }
-        sessionStorage.setItem(process.env.VUE_APP_TBAS_TITLES_KEY, JSON.stringify(state.customTitles))
+        sessionStorage.setItem(process.env.VUE_APP_TBAS_TITLES_KEY, JSON.stringify(state.customTitles));
       }
-    }
-  }
-}
+    },
+  },
+};

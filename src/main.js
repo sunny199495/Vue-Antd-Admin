@@ -12,6 +12,13 @@ import {initI18n} from '@/utils/i18n'
 import bootstrap from '@/bootstrap'
 import 'moment/locale/zh-cn'
 
+import { Icon } from 'ant-design-vue';
+const IconFont = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_2451608_utwauxl1rt.js',
+});
+Vue.component('icon-font',IconFont)
+
+
 const router = initRouter(store.state.setting.asyncRoutes)
 const i18n = initI18n('CN', 'US')
 

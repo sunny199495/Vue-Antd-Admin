@@ -24,11 +24,11 @@ const routerMap = {
   },
   workplace: {
     name: "工作台",
-    component: () => import("@/pages/dashboard/workplace"),
+    component: () => import("@/pages/dashboard/workplace/WorkPlace"),
   },
   analysis: {
     name: "分析页",
-    component: () => import("@/pages/dashboard/analysis"),
+    component: () => import("@/pages/dashboard/analysis/Analysis"),
   },
 };
 export default routerMap;

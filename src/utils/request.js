@@ -4,13 +4,15 @@ import LS from "cz-storage";
 
 // 跨域认证信息 header 名
 const xsrfHeaderName = ""; //Authorization
-const header = LS.get("headerTestID") || "";
+const header = LS.get("header");
 
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = xsrfHeaderName;
 axios.defaults.xsrfCookieName = xsrfHeaderName;
-axios.defaults.headers = header;
+if (header) {
+  axios.defaults.headers = header;
+}
 
 // 认证类型
 const AUTH_TYPE = {

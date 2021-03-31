@@ -93,7 +93,6 @@ export default {
     getLaster() {
       msgLaster()
         .then((res) => {
-          console.log(res.data);
           if (res.data.code == 200) {
             this.setNotice(true);
             this.messageInfo = res.data.data;

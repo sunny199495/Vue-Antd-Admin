@@ -26,8 +26,10 @@ export default {
     };
   },
   created() {
-    this.caseId = this.$ls.get("headerTestID").caseId || false;
-    this.projectId = this.$ls.get("headerTestID").projectId || false;
+    if (this.$ls.get("header")) {
+      this.caseId = this.$ls.get("header").caseId;
+      this.projectId = this.$ls.get("header").projectId;
+    }
   },
   methods: {
     showModal() {
@@ -36,7 +38,7 @@ export default {
     ok() {
       this.modalVisible = false;
       const data = { caseId: this.caseId, projectId: this.projectId };
-      this.$ls.put("headerTestID", data, 1);
+      this.$ls.put("header", data, 1);
       location.reload();
     },
   },

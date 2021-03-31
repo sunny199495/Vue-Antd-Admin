@@ -36,7 +36,9 @@ export default {
     ...mapGetters("account", ["user"]),
   },
   created() {
-    this.isDebug = this.$ls.get("isDebug").isDebug || false;
+    if (this.$ls.get("isDebug")) {
+      this.isDebug = this.$ls.get("isDebug").isDebug || false;
+    }
   },
   methods: {
     logout() {
@@ -45,6 +47,7 @@ export default {
     },
     debug(val) {
       this.$ls.put("isDebug", { isDebug: val }, 1);
+      this.$ls.remove("header");
       setTimeout(() => {
         this.isDebug = val;
         location.reload();

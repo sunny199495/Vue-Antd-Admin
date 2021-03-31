@@ -44,7 +44,9 @@ export default {
     };
   },
   created() {
-    this.isDebug = this.$ls.get("isDebug").isDebug || false;
+    if (this.$ls.get("isDebug")) {
+      this.isDebug = this.$ls.get("isDebug").isDebug || false;
+    }
   },
   computed: {
     ...mapState("setting", ["theme", "isMobile", "layout", "systemName", "lang", "pageWidth"]),

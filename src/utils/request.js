@@ -1,9 +1,10 @@
 import axios from "axios";
 import Cookie from "js-cookie";
+import LS from "cz-storage";
 
 // 跨域认证信息 header 名
 const xsrfHeaderName = ""; //Authorization
-const header = { caseId: 13047, projectId: 142 };
+const header = LS.get("headerTestID") || "";
 
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;

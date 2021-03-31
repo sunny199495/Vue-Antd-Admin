@@ -20,8 +20,10 @@ export default {
     },
   },
   components: { Model1, Model2, Model3 },
-  created() {
-    this.item.templateValue.title.levelName = safeLevel(this.item);
+  watch: {
+    item(val) {
+      this.item.templateValue.title.levelName = safeLevel(val);
+    },
   },
 };
 </script>

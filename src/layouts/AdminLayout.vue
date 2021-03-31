@@ -23,7 +23,7 @@
         <page-footer :link-list="footerLinks" :copyright="copyright" />
       </a-layout-footer>
     </a-layout>
-    <notice-model :item="list[0]" />
+    <notice-model :item="messageInfo" />
   </a-layout>
 </template>
 
@@ -35,6 +35,7 @@ import SideMenu from "../components/menu/SideMenu";
 import Setting from "../components/setting/Setting";
 import NoticeModel from "../components/Message/NoticeModel";
 import { mapState, mapMutations, mapGetters } from "vuex";
+import { msgLaster } from "../services/test";
 
 // const minHeight = window.innerHeight - 64 - 122
 
@@ -47,23 +48,7 @@ export default {
       collapsed: false,
       showSetting: false,
       drawerOpen: false,
-      list: [
-        {
-          templateCode: 3,
-          templateValue: {
-            msgId: "437128537104381278302178432",
-            title: {
-              place: "国家软件园摩羯座",
-              level: 3,
-            },
-            source: {
-              name: "安全管家",
-              image: "https://img95.699pic.com/photo/50061/6284.jpg_wh300.jpg",
-            },
-            time: "2021/03/29 09:30:00",
-          },
-        },
-      ],
+      messageInfo: { templateCode: "", templateValue: { msgId: "", title: { place: "", level: "" }, source: { name: "", image: "" }, time: "" } },
     };
   },
   provide() {
@@ -105,6 +90,19 @@ export default {
     },
   },
   methods: {
+    getLaster() {
+      msgLaster()
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.code == 200) {
+            this.setNotice(true);
+            this.messageInfo = res.data.data;
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     ...mapMutations("setting", ["correctPageMinHeight", "setActivatedFirst", "setNotice"]),
     toggleCollapse() {
       this.collapsed = !this.collapsed;
@@ -129,7 +127,7 @@ export default {
   created() {
     this.correctPageMinHeight(this.minHeight - 24);
     this.setActivated(this.$route);
-    this.setNotice(true);
+    this.getLaster();
   },
   beforeDestroy() {
     this.correctPageMinHeight(-this.minHeight + 24);

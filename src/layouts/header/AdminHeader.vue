@@ -11,6 +11,7 @@
         <i-menu class="head-menu" :theme="headerTheme" mode="horizontal" :options="menuData" @select="onSelect" />
       </div>
       <div :class="['admin-header-right', headerTheme]">
+        <header-debug class="header-item" v-if="isDebug" />
         <header-notice class="header-item" />
         <header-avatar class="header-item" />
         <!-- <header-lang class="header-item" /> -->
@@ -23,12 +24,13 @@
 import HeaderNotice from "./HeaderNotice";
 import HeaderAvatar from "./HeaderAvatar";
 // import HeaderLang from "./HeaderLang";
+import headerDebug from "./HeaderDebug";
 import IMenu from "@/components/menu/menu";
 import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "AdminHeader",
-  components: { IMenu, HeaderAvatar, HeaderNotice },
+  components: { IMenu, HeaderAvatar, HeaderNotice, headerDebug },
   props: ["collapsed", "menuData"],
   data() {
     return {
@@ -38,7 +40,11 @@ export default {
         { key: "US", name: "English", alias: "English" },
       ],
       searchActive: false,
+      isDebug: false,
     };
+  },
+  created() {
+    this.isDebug = this.$ls.get("isDebug").isDebug || false;
   },
   computed: {
     ...mapState("setting", ["theme", "isMobile", "layout", "systemName", "lang", "pageWidth"]),

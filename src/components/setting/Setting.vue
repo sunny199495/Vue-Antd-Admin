@@ -45,7 +45,7 @@
         </a-list-item>
         <a-list-item>
           {{ $t("navigate.fixedHeader") }}
-          <a-switch :checked="fixedHeader" slot="actions" size="small" @change="setFixedHeader" />
+          <a-switch :checked="fixedHeader" slot="actions" size="small" @change="setFixedHeader" @click="setTabs" />
         </a-list-item>
         <a-list-item>
           {{ $t("navigate.fixedSideBar") }}
@@ -125,7 +125,7 @@ export default {
     directions() {
       return this.animates.find((item) => item.name == this.animate.name).directions;
     },
-    ...mapState("setting", ["theme", "layout", "animate", "animates", "palettes", "multiPage", "weekMode", "fixedHeader", "fixedSideBar", "hideSetting", "pageWidth"]),
+    ...mapState("setting", ["theme", "layout", "animate", "animates", "palettes", "multiPage", "weekMode", "fixedHeader", "fixedHeader", "fixedSideBar", "hideSetting", "pageWidth"]),
   },
   watch: {
     "animate.name": function(val) {
@@ -185,7 +185,10 @@ export default {
       });
       return config;
     },
-    ...mapMutations("setting", ["setTheme", "setLayout", "setMultiPage", "setWeekMode", "setFixedSideBar", "setFixedHeader", "setAnimate", "setHideSetting", "setPageWidth"]),
+    ...mapMutations("setting", ["setTheme", "setLayout", "setMultiPage", "setWeekMode", "setFixedSideBar", "setFixedHeader", "setFixedTabs", "setAnimate", "setHideSetting", "setPageWidth"]),
+    setTabs() {
+      this.setFixedTabs(false);
+    },
   },
 };
 </script>

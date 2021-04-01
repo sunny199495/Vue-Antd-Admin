@@ -2,16 +2,10 @@
   <div :class="['tabs-head', headerTheme, layout, pageWidth]">
     <a-tabs type="editable-card" :class="['tabs-container', layout, pageWidth, { affixed: affixed, 'fixed-header': fixedHeader, collapsed: adminLayout.collapsed }]" :active-key="active" :hide-add="true">
       <a-tooltip placement="left" slot="tabBarExtraContent">
-        <a-icon class="header-lock" type="more" />
+        <a-icon class="header-fullscreen" type="more" />
       </a-tooltip>
-      <a-tooltip placement="left" :title="lockTitle" slot="tabBarExtraContent">
-        <!-- <a-icon
-            theme="filled"
-            @click="onLockClick"
-            class="header-lock"
-            :type="fixedTabs ? 'lock' : 'unlock'"
-        /> -->
-        <a-icon class="header-lock" @click="onFullscreenClick" :type="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" />
+      <a-tooltip placement="left" :title="fullscreenTitle" slot="tabBarExtraContent">
+        <a-icon class="header-fullscreen" @click="onFullscreenClick" :type="affixed ? 'fullscreen-exit' : 'fullscreen'" />
       </a-tooltip>
       <a-tab-pane v-for="page in pageList" :key="page.fullPath">
         <div slot="tab" class="tab" @contextmenu="(e) => onContextmenu(page.fullPath, e)">
@@ -34,16 +28,16 @@ export default {
   i18n: {
     messages: {
       CN: {
-        lock: "点击全屏",
-        unlock: "点击解除全屏",
+        fullscreen: "点击全屏",
+        unfullscreen: "点击解除全屏",
       },
       HK: {
-        lock: "點擊全屏",
-        unlock: "點擊解除全屏",
+        fullscreen: "點擊全屏",
+        unfullscreen: "點擊解除全屏",
       },
       US: {
-        lock: "Click full screen",
-        unlock: "Click to dismiss full screen",
+        fullscreen: "Click full screen",
+        unfullscreen: "Click to dismiss full screen",
       },
     },
   },
@@ -55,7 +49,6 @@ export default {
   data() {
     return {
       affixed: false,
-      isFullscreen: false,
     };
   },
   inject: ["adminLayout"],
@@ -63,18 +56,19 @@ export default {
     this.affixed = this.fixedTabs;
   },
   computed: {
-    ...mapState("setting", ["layout", "pageWidth", "fixedHeader", "fixedTabs", "customTitles", "theme", "headerTheme"]),
-    lockTitle() {
-      return this.$t(this.isFullscreen ? "unlock" : "lock");
+    ...mapState("setting", ["layout", "pageWidth", "fixedHeader", "fixedTabs", "fixedHeader", "customTitles", "theme"]),
+    fullscreenTitle() {
+      return this.$t(this.affixed ? "unfullscreen" : "fullscreen");
     },
     headerTheme() {
       return this.theme.mode;
     },
   },
   methods: {
-    ...mapMutations("setting", ["setFixedTabs"]),
-    onLockClick() {
+    ...mapMutations("setting", ["setFixedTabs", "setFixedHeader"]),
+    onFullscreenClick() {
       this.setFixedTabs(!this.fixedTabs);
+      this.setFixedHeader(false);
       if (this.fixedTabs) {
         setTimeout(() => {
           this.affixed = true;
@@ -82,9 +76,6 @@ export default {
       } else {
         this.affixed = false;
       }
-    },
-    onFullscreenClick() {
-      this.isFullscreen = !this.isFullscreen;
     },
     onTabClick(key) {
       if (this.active !== key) {
@@ -151,7 +142,7 @@ export default {
 .tabs-container {
   margin: 12px 0 0 0;
   transition: top, left 0.2s;
-  .header-lock {
+  .header-fullscreen {
     font-size: 18px;
     cursor: pointer;
     color: @primary-3;

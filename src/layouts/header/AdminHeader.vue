@@ -11,7 +11,7 @@
         <i-menu class="head-menu" :theme="headerTheme" mode="horizontal" :options="menuData" @select="onSelect" />
       </div>
     </div>
-    <tabs />
+    <tabs v-if="!fixedTabs" />
   </a-layout-header>
 </template>
 
@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("setting", ["theme", "isMobile", "layout", "systemName", "lang", "pageWidth"]),
+    ...mapState("setting", ["theme", "isMobile", "layout", "systemName", "lang", "pageWidth", "fixedTabs"]),
     headerTheme() {
       return this.theme.mode;
     },

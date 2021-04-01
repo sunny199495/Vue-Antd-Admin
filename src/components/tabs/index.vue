@@ -1,45 +1,17 @@
 <template>
-  <admin-layout>
-    <contextmenu :itemList="menuItemList" :visible.sync="menuVisible" @select="onMenuSelect" />
-    <!-- <tabs-head
-        v-if="multiPage"
-        :active="activePage"
-        :page-list="pageList"
-        @change="changePage"
-        @close="remove"
-        @refresh="refresh"
-        @contextmenu="onContextmenu"
-    /> -->
-    <div :class="['tabs-view-content', layout, pageWidth]" :style="`margin-top: ${multiPage ? -24 : 0}px`">
-      <page-toggle-transition :disabled="animate.disabled" :animate="animate.name" :direction="animate.direction">
-        <a-keep-alive :exclude-keys="excludeKeys" v-if="multiPage && cachePage" v-model="clearCaches">
-          <router-view v-if="!refreshing" ref="tabContent" :key="$route.fullPath" />
-        </a-keep-alive>
-        <router-view ref="tabContent" v-else-if="!refreshing" />
-      </page-toggle-transition>
-    </div>
-  </admin-layout>
+  <tabs-head v-if="multiPage" :active="activePage" :page-list="pageList" @change="changePage" @close="remove" @refresh="refresh" @contextmenu="onContextmenu" />
 </template>
 
 <script>
-import AdminLayout from "@/layouts/AdminLayout";
-import Contextmenu from "@/components/menu/Contextmenu";
-import PageToggleTransition from "@/components/transition/PageToggleTransition";
 import { mapState, mapMutations } from "vuex";
 import { getI18nKey } from "@/utils/routerUtil";
-import AKeepAlive from "@/components/cache/AKeepAlive";
-// import TabsHead from '@/layouts/tabs/TabsHead'
+import TabsHead from "@/layouts/tabs/TabsHead";
 
 export default {
   name: "TabsView",
-  provide() {
-    //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
-    return {
-      reload: this.reload,
-    };
-  },
+  inject: ["reload"],
   i18n: require("./i18n"),
-  components: { PageToggleTransition, Contextmenu, AdminLayout, AKeepAlive },
+  components: { TabsHead },
   data() {
     return {
       clearCaches: [],
@@ -65,7 +37,6 @@ export default {
     },
   },
   created() {
-    console.log(123);
     this.loadCacheConfig(this.$router?.options?.routes);
     this.loadCachedTabs();
     const route = this.$route;
@@ -118,12 +89,6 @@ export default {
     },
   },
   methods: {
-    reload() {
-      this.refreshing = true; //先关闭，
-      this.$nextTick(function() {
-        this.refreshing = false; //再打开
-      });
-    },
     changePage(key) {
       this.activePage = key;
       this.$router.push(key);
@@ -144,6 +109,7 @@ export default {
       }
     },
     refresh(key, page) {
+      this.reload();
       page = page || this.pageList.find((item) => item.fullPath === key);
       page.loading = true;
       this.clearCache(page);

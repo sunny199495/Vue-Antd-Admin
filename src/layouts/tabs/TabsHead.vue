@@ -6,14 +6,14 @@
         :active-key="active"
         :hide-add="true"
     >
-      <a-tooltip placement="left" :title="lockTitle" slot="tabBarExtraContent">
+      <!-- <a-tooltip placement="left" :title="lockTitle" slot="tabBarExtraContent">
         <a-icon
             theme="filled"
             @click="onLockClick"
             class="header-lock"
             :type="fixedTabs ? 'lock' : 'unlock'"
         />
-      </a-tooltip>
+      </a-tooltip> -->
       <a-tab-pane v-for="page in pageList" :key="page.fullPath">
         <div slot="tab" class="tab" @contextmenu="e => onContextmenu(page.fullPath, e)">
           <a-icon @click="onRefresh(page)" :class="['icon-sync', {'hide': page.fullPath !== active && !page.loading}]" :type="page.loading ? 'loading' : 'sync'" />

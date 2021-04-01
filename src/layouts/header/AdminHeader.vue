@@ -6,31 +6,23 @@
         <h1 v-if="!isMobile">{{ systemName }}</h1>
       </router-link>
       <a-divider v-if="isMobile" type="vertical" />
-      <a-icon v-if="layout !== 'head'" class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapse" />
+      <!-- <a-icon v-if="layout !== 'head'" class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapse" /> -->
       <div v-if="layout !== 'side' && !isMobile" class="admin-header-menu" :style="`width: ${menuWidth};`">
         <i-menu class="head-menu" :theme="headerTheme" mode="horizontal" :options="menuData" @select="onSelect" />
       </div>
-      <div :class="['admin-header-right', headerTheme]">
-        <header-debug class="header-item" v-if="isDebug" />
-        <header-notice class="header-item" />
-        <header-avatar class="header-item" />
-        <!-- <header-lang class="header-item" /> -->
-      </div>
     </div>
+    <tabs />
   </a-layout-header>
 </template>
 
 <script>
-import HeaderNotice from "./HeaderNotice";
-import HeaderAvatar from "./HeaderAvatar";
-// import HeaderLang from "./HeaderLang";
-import headerDebug from "./HeaderDebug";
 import IMenu from "@/components/menu/menu";
+import Tabs from "@/components/tabs";
 import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "AdminHeader",
-  components: { IMenu, HeaderAvatar, HeaderNotice, headerDebug },
+  components: { IMenu, Tabs },
   props: ["collapsed", "menuData"],
   data() {
     return {

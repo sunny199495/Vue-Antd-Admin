@@ -1,5 +1,6 @@
 import TabsView from "@/layouts/tabs/TabsView";
-import BlankView from "@/layouts/BlankView";
+// import BlankView from "@/layouts/BlankView";
+import PageView from "@/layouts/PageView";
 
 // 路由配置
 const options = {
@@ -55,7 +56,7 @@ const options = {
           meta: {
             icon: "dashboard",
           },
-          component: BlankView,
+          component: PageView,
           children: [
             {
               path: "workplace",

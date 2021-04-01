@@ -1,14 +1,18 @@
 <template>
   <div :class="['tabs-head', layout, pageWidth]">
     <a-tabs type="editable-card" :class="['tabs-container', layout, pageWidth, { affixed: affixed, 'fixed-header': fixedHeader, collapsed: adminLayout.collapsed }]" :active-key="active" :hide-add="true">
-      <!-- <a-tooltip placement="left" :title="lockTitle" slot="tabBarExtraContent">
-        <a-icon
+      <a-tooltip placement="left" slot="tabBarExtraContent">
+        <a-icon class="header-lock" type="more" />
+      </a-tooltip>
+      <a-tooltip placement="left" :title="lockTitle" slot="tabBarExtraContent">
+        <!-- <a-icon
             theme="filled"
             @click="onLockClick"
             class="header-lock"
             :type="fixedTabs ? 'lock' : 'unlock'"
-        />
-      </a-tooltip> -->
+        /> -->
+        <a-icon class="header-lock" @click="onFullscreenClick" :type="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" />
+      </a-tooltip>
       <a-tab-pane v-for="page in pageList" :key="page.fullPath">
         <div slot="tab" class="tab" @contextmenu="(e) => onContextmenu(page.fullPath, e)">
           <a-icon @click="onRefresh(page)" :class="['icon-sync', { hide: page.fullPath !== active && !page.loading }]" :type="page.loading ? 'loading' : 'sync'" />
@@ -30,16 +34,16 @@ export default {
   i18n: {
     messages: {
       CN: {
-        lock: "点击锁定页签头",
-        unlock: "点击解除锁定",
+        lock: "点击全屏",
+        unlock: "点击解除全屏",
       },
       HK: {
-        lock: "點擊鎖定頁簽頭",
-        unlock: "點擊解除鎖定",
+        lock: "點擊全屏",
+        unlock: "點擊解除全屏",
       },
       US: {
-        lock: "click to lock the tabs head",
-        unlock: "click to unlock",
+        lock: "Click full screen",
+        unlock: "Click to dismiss full screen",
       },
     },
   },
@@ -51,6 +55,7 @@ export default {
   data() {
     return {
       affixed: false,
+      isFullscreen: false,
     };
   },
   inject: ["adminLayout"],
@@ -60,7 +65,7 @@ export default {
   computed: {
     ...mapState("setting", ["layout", "pageWidth", "fixedHeader", "fixedTabs", "customTitles"]),
     lockTitle() {
-      return this.$t(this.fixedTabs ? "unlock" : "lock");
+      return this.$t(this.isFullscreen ? "unlock" : "lock");
     },
   },
   methods: {
@@ -74,6 +79,9 @@ export default {
       } else {
         this.affixed = false;
       }
+    },
+    onFullscreenClick() {
+      this.isFullscreen = !this.isFullscreen;
     },
     onTabClick(key) {
       if (this.active !== key) {

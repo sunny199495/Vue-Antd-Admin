@@ -43,9 +43,6 @@ export default {
   computed: {
     ...mapState("setting", ["theme", "isMobile", "layout", "systemName", "lang", "pageWidth"]),
     headerTheme() {
-      if (this.layout == "side" && this.theme.mode == "dark" && !this.isMobile) {
-        return "light";
-      }
       return this.theme.mode;
     },
     langAlias() {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="['tabs-head', layout, pageWidth]">
+  <div :class="['tabs-head', headerTheme, layout, pageWidth]">
     <a-tabs type="editable-card" :class="['tabs-container', layout, pageWidth, { affixed: affixed, 'fixed-header': fixedHeader, collapsed: adminLayout.collapsed }]" :active-key="active" :hide-add="true">
       <a-tooltip placement="left" slot="tabBarExtraContent">
         <a-icon class="header-lock" type="more" />
@@ -63,9 +63,12 @@ export default {
     this.affixed = this.fixedTabs;
   },
   computed: {
-    ...mapState("setting", ["layout", "pageWidth", "fixedHeader", "fixedTabs", "customTitles"]),
+    ...mapState("setting", ["layout", "pageWidth", "fixedHeader", "fixedTabs", "customTitles", "theme", "headerTheme"]),
     lockTitle() {
       return this.$t(this.isFullscreen ? "unlock" : "lock");
+    },
+    headerTheme() {
+      return this.theme.mode;
     },
   },
   methods: {

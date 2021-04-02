@@ -9,7 +9,7 @@
     <i-menu :theme="theme" :collapsed="collapsed" :options="menuData" @select="onSelect" class="menu" />
     <div :class="['side-bottom', theme]">
       <side-debug :class="['side-item', sideTheme]" v-if="isDebug" />
-      <side-avatar :class="['side-item', sideTheme]" />
+      <side-avatar :class="['side-item', sideTheme]" :collapsed="collapsed" />
       <a-icon :class="['trigger', sideTheme]" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapse" />
     </div>
   </a-layout-sider>

@@ -2,7 +2,7 @@
   <a-dropdown>
     <div class="side-avatar" style="cursor: pointer">
       <a-avatar class="avatar" size="small" shape="circle" :src="user.avatar" />
-      <div class="name">{{ user.name }}</div>
+      <div class="name" :class="collapsed ? '' : 'name-open'">{{ user.name }}</div>
     </div>
     <a-menu :class="['avatar-menu']" slot="overlay">
       <a-menu-item @click="logout">
@@ -27,6 +27,13 @@ import { logout } from "@/services/user";
 
 export default {
   name: "HeaderAvatar",
+  props: {
+    collapsed: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   data() {
     return {
       isDebug: false,
@@ -59,6 +66,9 @@ export default {
 
 <style lang="less">
 .name {
-  margin-top: 10px;
+  margin: 10px;
+}
+.name-open {
+  display: inline-block;
 }
 </style>

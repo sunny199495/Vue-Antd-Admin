@@ -1,15 +1,25 @@
-.page-header{
+#page-header {
+  > .breadcrumb {
+    margin-top: 10px;
+  }
+}
+.page-header {
   background: @base-bg-color;
-  padding: 16px 24px;
-  &.head.fixed{
+  padding: 20px;
+  &.head.fixed {
     margin: auto;
     max-width: 1400px;
   }
-  .page-header-wide{
-    .breadcrumb{
-      margin-bottom: 20px;
+  .page-header-wide {
+    display: flex;
+    .img {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(#000, 0.1);
+      border-radius: 2px;
+      margin-right: 10px;
     }
-    .detail{
+    .detail {
       display: flex;
       .row {
         display: flex;
@@ -17,23 +27,55 @@
         justify-content: space-between;
       }
       .avatar {
-        margin:0 24px 0 0;
+        margin: 0 24px 0 0;
       }
-      .main{
+      .main {
         width: 100%;
-        .title{
+        .title {
           font-size: 20px;
           color: @title-color;
           margin-bottom: 16px;
         }
-        .content{
+        .content {
           display: flex;
           flex-wrap: wrap;
           color: @text-color-second;
         }
-        .extra{
+        .extra {
           display: flex;
         }
+      }
+    }
+    .tabs {
+      width: 400px;
+      display: flex;
+      position: absolute;
+      left: 50%;
+      margin-left: -200px;
+      .tab {
+        margin: 0 auto;
+        position: relative;
+      }
+      .tabActive {
+        color: @primary-color;
+        &::after {
+          content: "";
+          width: 50px;
+          height: 2px;
+          background: @primary-color;
+          position: absolute;
+          bottom: -20px;
+          left: 50%;
+          margin-left: -25px;
+          border-radius: 4px;
+        }
+      }
+    }
+    .setting {
+      position: absolute;
+      right: 0;
+      .anticon {
+        margin-right: 10px;
       }
     }
   }

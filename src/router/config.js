@@ -1,6 +1,6 @@
 import TabsView from "@/layouts/tabs/TabsView";
 // import BlankView from "@/layouts/BlankView";
-import PageView from "@/layouts/PageView";
+// import PageView from "@/layouts/PageView";
 
 // 路由配置
 const options = {
@@ -51,25 +51,16 @@ const options = {
       redirect: "/login",
       children: [
         {
-          path: "dashboard",
-          name: "Dashboard",
-          meta: {
-            icon: "dashboard",
-          },
-          component: PageView,
-          children: [
-            {
-              path: "workplace",
-              name: "工作台",
-              meta: { page: { closable: false } },
-              component: () => import("@/pages/dashboard/workplace/WorkPlace"),
-            },
-            {
-              path: "analysis",
-              name: "分析页",
-              component: () => import("@/pages/dashboard/analysis/Analysis"),
-            },
-          ],
+          path: "dashboard/workplace",
+          name: "工作台",
+          meta: { icon: "dashboard", page: { closable: false } },
+          component: () => import("@/pages/dashboard/workplace/WorkPlace"),
+        },
+        {
+          path: "meaasge/list",
+          name: "消息中心",
+          meta: { icon: "bell" },
+          component: () => import("@/pages/message/list.vue"),
         },
       ],
     },

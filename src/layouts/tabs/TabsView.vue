@@ -11,7 +11,7 @@
         @contextmenu="onContextmenu"
     /> -->
     <div :class="['tabs-view-content', layout, pageWidth]" :style="`margin-top: ${multiPage ? -24 : 0}px`">
-      <page-layout />
+      <!-- <page-layout /> -->
       <page-toggle-transition :disabled="animate.disabled" :animate="animate.name" :direction="animate.direction">
         <a-keep-alive :exclude-keys="excludeKeys" v-if="multiPage && cachePage" v-model="clearCaches">
           <router-view v-if="!refreshing" ref="tabContent" :key="$route.fullPath" />
@@ -26,7 +26,7 @@
 import AdminLayout from "@/layouts/AdminLayout";
 import Contextmenu from "@/components/menu/Contextmenu";
 import PageToggleTransition from "@/components/transition/PageToggleTransition";
-import PageLayout from "@/layouts/PageLayout";
+// import PageLayout from "@/layouts/PageLayout";
 import { mapState, mapMutations } from "vuex";
 import { getI18nKey } from "@/utils/routerUtil";
 import AKeepAlive from "@/components/cache/AKeepAlive";
@@ -41,7 +41,7 @@ export default {
     };
   },
   i18n: require("./i18n"),
-  components: { PageToggleTransition, Contextmenu, AdminLayout, AKeepAlive, PageLayout },
+  components: { PageToggleTransition, Contextmenu, AdminLayout, AKeepAlive },
   data() {
     return {
       clearCaches: [],

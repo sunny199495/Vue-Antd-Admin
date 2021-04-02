@@ -7,16 +7,22 @@
       </router-link>
     </div>
     <i-menu :theme="theme" :collapsed="collapsed" :options="menuData" @select="onSelect" class="menu" />
-    <a-icon :class="['trigger', sideTheme]" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapse" />
+    <div :class="['side-bottom', theme]">
+      <side-debug :class="['side-item', sideTheme]" v-if="isDebug" />
+      <side-avatar :class="['side-item', sideTheme]" />
+      <a-icon :class="['trigger', sideTheme]" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggleCollapse" />
+    </div>
   </a-layout-sider>
 </template>
 
 <script>
 import IMenu from "./menu";
+import SideDebug from "./SideDebug";
+import SideAvatar from "./SideAvatar";
 import { mapState } from "vuex";
 export default {
   name: "SideMenu",
-  components: { IMenu },
+  components: { IMenu, SideDebug, SideAvatar },
   props: {
     collapsible: {
       type: Boolean,
@@ -36,6 +42,7 @@ export default {
   data() {
     return {
       collapsed: true,
+      isDebug: false,
     };
   },
   computed: {
@@ -43,6 +50,11 @@ export default {
       return this.theme == "light" ? this.theme : "dark";
     },
     ...mapState("setting", ["isMobile", "systemName"]),
+  },
+  created() {
+    if (this.$ls.get("isDebug")) {
+      this.isDebug = this.$ls.get("isDebug").isDebug;
+    }
   },
   methods: {
     onSelect(obj) {

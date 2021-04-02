@@ -3,7 +3,7 @@
     <drawer v-if="isMobile" v-model="drawerOpen">
       <side-menu :theme="theme.mode" :menuData="menuData" :collapsed="false" :collapsible="false" @menuSelect="onMenuSelect" />
     </drawer>
-    <side-menu :class="[fixedSideBar ? 'fixed-side' : '']" :theme="theme.mode" v-else-if="(!fixedTabs && layout === 'side') || layout === 'mix'" :menuData="sideMenuData" :collapsed="collapsed" :collapsible="true" />
+    <side-menu :class="[fixedSideBar ? 'fixed-side' : '']" :theme="theme.mode" v-else-if="(!fixedTabs && layout === 'side') || layout === 'mix'" :menuData="sideMenuData" :collapsed="collapsed" :collapsible="true" @toggleCollapse="toggleCollapse" />
     <div v-if="fixedSideBar && !isMobile" :style="`width: ${sideMenuWidth}; min-width: ${sideMenuWidth};max-width: ${sideMenuWidth};`" class="virtual-side"></div>
     <drawer v-if="!hideSetting" v-model="showSetting" placement="right">
       <div class="setting" slot="handler">
@@ -12,7 +12,7 @@
       <setting />
     </drawer>
     <a-layout class="admin-layout-main beauty-scroll">
-      <admin-header :class="[{ 'fixed-tabs': fixedTabs, 'fixed-header': fixedHeader, 'multi-page': multiPage }]" :style="headerStyle" :menuData="headMenuData" :collapsed="collapsed" @toggleCollapse="toggleCollapse" />
+      <admin-header :class="[{ 'fixed-tabs': fixedTabs, 'fixed-header': fixedHeader, 'multi-page': multiPage }]" :style="headerStyle" :menuData="headMenuData" :collapsed="collapsed" />
       <a-layout-header :class="['virtual-header', { 'fixed-tabs': fixedTabs, 'fixed-header': fixedHeader, 'multi-page': multiPage }]" v-show="fixedHeader"></a-layout-header>
       <a-layout-content class="admin-layout-content" :style="`min-height: ${minHeight}px;`">
         <div style="position: relative">
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       minHeight: window.innerHeight - 64 - 122,
-      collapsed: false,
+      collapsed: true,
       showSetting: false,
       drawerOpen: false,
       messageInfo: { templateCode: "", templateValue: { msgId: "", title: { place: "", level: "" }, source: { name: "", image: "" }, time: "" } },
@@ -73,7 +73,7 @@ export default {
     ...mapState("setting", ["isMobile", "theme", "layout", "footerLinks", "copyright", "fixedHeader", "fixedSideBar", "fixedTabs", "hideSetting", "multiPage"]),
     ...mapGetters("setting", ["firstMenu", "subMenu", "menuData"]),
     sideMenuWidth() {
-      return this.collapsed ? "80px" : "256px";
+      return this.collapsed ? "80px" : "200px";
     },
     headerStyle() {
       let width = this.fixedHeader && this.layout !== "head" && !this.isMobile ? `calc(100% - ${this.sideMenuWidth})` : "100%";

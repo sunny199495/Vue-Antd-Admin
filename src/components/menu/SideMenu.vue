@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import IMenu from "./menu";
+import IMenu from "./IMenu";
 import SideDebug from "./SideDebug";
 import SideAvatar from "./SideAvatar";
 import { mapState } from "vuex";

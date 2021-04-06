@@ -1,14 +1,21 @@
 <template>
-  <div class="menu">
-    <router-link :to="item.fullPath" :class="['menu-item', theme, path.fullPath == item.fullPath ? 'path-active' : '']" v-for="(item, index) in options" :key="index" @click="pathChange(item)">
-      <a-icon :type="item.meta.icon" />
-      <span>{{ item.name }}</span>
-    </router-link>
+  <div>
+    <a-menu :default-selected-keys="[pathKey]" mode="inline" :theme="theme" :inline-collapsed="collapsed">
+      <a-menu-item v-for="(item, index) in options" :key="index" @click="pathChange(item)">
+        <router-link :to="item.fullPath">
+          <a-icon :type="item.meta.icon" />
+          <span>{{ item.name }}</span>
+        </router-link>
+      </a-menu-item>
+    </a-menu>
+    <drawer :visible="drawerVisible" @visibleChange="visibleChange" />
   </div>
 </template>
 <script>
+import Drawer from "../drawer/Drawer";
 import { mapState } from "vuex";
 export default {
+  components: { Drawer },
   props: {
     options: {
       type: Array,
@@ -19,10 +26,16 @@ export default {
       required: false,
       default: "dark",
     },
+    collapsed: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
-      path: {},
+      pathKey: 1,
+      drawerVisible: false,
     };
   },
   computed: {
@@ -31,29 +44,22 @@ export default {
     },
     ...mapState("setting", ["menu"]),
   },
+  created() {
+    this.options.forEach((element, index) => {
+      if (element.fullPath == this.$route.fullPath) {
+        this.pathKey = index;
+      }
+    });
+  },
   methods: {
     pathChange(item) {
-      this.path = item;
+      if (item.fullPath == "/meaasge/list") {
+        this.drawerVisible = true;
+      }
+    },
+    visibleChange(val) {
+      this.drawerVisible = val;
     },
   },
 };
 </script>
-<style lang="less" scoped>
-.menu {
-  .menu-item {
-    padding: 10px 0;
-    display: block;
-    color: @layout-body-background;
-    &:hover {
-      color: @primary-color;
-    }
-  }
-  .router-link-active {
-    background: @primary-color;
-    color: @layout-body-background;
-    &:hover {
-      color: @layout-body-background;
-    }
-  }
-}
-</style>

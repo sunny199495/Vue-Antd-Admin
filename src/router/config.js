@@ -62,6 +62,12 @@ const options = {
           meta: { icon: "bell" },
           component: () => import("@/pages/message/list.vue"),
         },
+        {
+          path: "buriedPoint",
+          name: "埋点demo",
+          meta: { icon: "more" },
+          component: () => import("@/pages/buriedPoint/BuriedPoint.vue"),
+        },
       ],
     },
   ],

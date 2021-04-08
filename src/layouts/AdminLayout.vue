@@ -35,7 +35,7 @@ import SideMenu from "../components/menu/SideMenu";
 import Setting from "../components/setting/Setting";
 import NoticeModel from "../components/Message/NoticeModel";
 import { mapState, mapMutations, mapGetters } from "vuex";
-import { msgLaster } from "../services/test";
+import { msgLaster } from "../api/message";
 
 // const minHeight = window.innerHeight - 64 - 122
 

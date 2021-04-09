@@ -24,6 +24,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { logout } from "@/services/user";
+import { time } from "../../utils/util";
 
 export default {
   name: "HeaderAvatar",
@@ -51,6 +52,9 @@ export default {
     logout() {
       logout();
       this.$router.push("/login");
+      if (this.$ls.get("isDebug").isDebug) {
+        console.log(`退出成功，退出时间：${time()}`);
+      }
     },
     debug(val) {
       this.$ls.put("isDebug", { isDebug: val }, 1);

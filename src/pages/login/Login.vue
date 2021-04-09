@@ -68,7 +68,6 @@ import { login, getRoutesConfig } from "@/services/user";
 import { setAuthorization } from "@/utils/request";
 import { loadRoutes } from "@/utils/routerUtil";
 import { mapMutations } from "vuex";
-import { time } from "../../utils/util";
 
 export default {
   name: "Login",
@@ -114,7 +113,7 @@ export default {
           this.$router.push("/dashboard/workplace");
           this.$message.success(loginRes.message, 3);
           if (this.$ls.get("isDebug").isDebug) {
-            console.log(`登陆成功，登陆时间：${time()}`);
+            console.log(`登陆成功，登陆时间：${this.$currentTime()}`);
           }
         });
       } else {

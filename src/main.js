@@ -26,6 +26,9 @@ Vue.prototype.$ls = LS;
 // LS.remove('key') //删除某个key
 // LS.clear() //清楚所有缓存
 
+import { currentTime } from "./utils/util";
+Vue.prototype.$currentTime = currentTime;
+
 const router = initRouter(store.state.setting.asyncRoutes);
 const i18n = initI18n("CN", "US");
 

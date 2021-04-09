@@ -24,7 +24,7 @@ export function safeLevel(item) {
   else return "五级";
 }
 
-export function time(time = +new Date()) {
+export function currentTime(time = +new Date()) {
   var date = new Date(time + 8 * 3600 * 1000);
   return date
     .toJSON()

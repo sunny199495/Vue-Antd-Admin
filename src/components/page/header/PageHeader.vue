@@ -29,13 +29,16 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
+    <point v-if="isDebug" :isFirst="isFirst" @pageChange="pageChange" />
   </div>
 </template>
 
 <script>
+import Point from "../../buriedPoint/BuriedPoint";
 import { mapState } from "vuex";
 export default {
   name: "PageHeader",
+  components: { Point },
   props: {
     title: {
       type: [String, Boolean],
@@ -74,14 +77,28 @@ export default {
           value: "目录3",
         },
       ],
+      isFirst: false,
+      isDebug: false,
     };
   },
   computed: {
     ...mapState("setting", ["layout", "showPageTitle", "pageWidth"]),
   },
+  created() {
+    if (this.$ls.get("isDebug")) {
+      this.isDebug = this.$ls.get("isDebug").isDebug;
+      setTimeout(() => {
+        this.isFirst = true;
+      }, 1);
+    }
+  },
   methods: {
     tabChange(item) {
       this.tabActive = item;
+      // this.isFirst = true;
+    },
+    pageChange(val) {
+      this.isFirst = val;
     },
   },
 };

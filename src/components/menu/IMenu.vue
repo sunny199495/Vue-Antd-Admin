@@ -9,7 +9,7 @@
       </a-menu-item>
     </a-menu>
     <drawer :visible="drawerVisible" @visibleChange="visibleChange" />
-    <point :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
+    <point v-if="isDebug" :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
 <script>
@@ -40,6 +40,7 @@ export default {
       drawerVisible: false,
       isSwitch: false,
       currentPagePath: null,
+      isDebug: false,
     };
   },
   computed: {
@@ -54,6 +55,9 @@ export default {
         this.pathKey = index;
       }
     });
+    if (this.$ls.get("isDebug")) {
+      this.isDebug = this.$ls.get("isDebug").isDebug;
+    }
   },
   methods: {
     pathChange(item) {

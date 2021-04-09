@@ -16,7 +16,7 @@
       </a-tab-pane>
     </a-tabs>
     <div v-if="affixed" class="virtual-tabs"></div>
-    <point :isSwitch="isSwitch" :isRefresh="isRefresh" :isClose="isClose" :currentPagePath="currentPagePath" @pageChange="pageChange" />
+    <point v-if="isDebug" :isSwitch="isSwitch" :isRefresh="isRefresh" :isClose="isClose" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
 
@@ -56,11 +56,15 @@ export default {
       isRefresh: false,
       isClose: false,
       currentPagePath: null,
+      isDebug: false,
     };
   },
   inject: ["adminLayout"],
   created() {
     this.affixed = this.fixedTabs;
+    if (this.$ls.get("isDebug")) {
+      this.isDebug = this.$ls.get("isDebug").isDebug;
+    }
   },
   computed: {
     ...mapState("setting", ["layout", "pageWidth", "fixedHeader", "fixedTabs", "fixedHeader", "customTitles", "theme"]),

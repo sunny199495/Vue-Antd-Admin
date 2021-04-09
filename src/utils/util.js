@@ -24,6 +24,15 @@ export function safeLevel(item) {
   else return "五级";
 }
 
+export function time(time = +new Date()) {
+  var date = new Date(time + 8 * 3600 * 1000);
+  return date
+    .toJSON()
+    .substr(0, 19)
+    .replace("T", " ")
+    .replace(/-/g, "-");
+}
+
 export function isRegExp(v) {
   return _toString.call(v) === "[object RegExp]";
 }

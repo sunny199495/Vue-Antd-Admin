@@ -16,18 +16,18 @@
       </a-tab-pane>
     </a-tabs>
     <div v-if="affixed" class="virtual-tabs"></div>
-    <point v-if="isDebug" :isSwitch="isSwitch" :isRefresh="isRefresh" :isClose="isClose" :currentPagePath="currentPagePath" @pageChange="pageChange" />
+    <point-page v-if="isDebug" :isSwitch="isSwitch" :isRefresh="isRefresh" :isClose="isClose" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
 import { getI18nKey } from "@/utils/routerUtil";
-import Point from "@/components/buriedPoint/BuriedPoint";
+import PointPage from "@/components/buriedPoint/PointPage";
 
 export default {
   name: "TabsHead",
-  components: { Point },
+  components: { PointPage },
   i18n: {
     messages: {
       CN: {

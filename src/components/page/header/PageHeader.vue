@@ -29,16 +29,16 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
-    <point v-if="isDebug" :isFirst="isFirst" @pageChange="pageChange" />
+    <point-page v-if="isDebug" :isFirst="isFirst" @pageChange="pageChange" />
   </div>
 </template>
 
 <script>
-import Point from "../../buriedPoint/BuriedPoint";
+import PointPage from "../../buriedPoint/PointPage";
 import { mapState } from "vuex";
 export default {
   name: "PageHeader",
-  components: { Point },
+  components: { PointPage },
   props: {
     title: {
       type: [String, Boolean],

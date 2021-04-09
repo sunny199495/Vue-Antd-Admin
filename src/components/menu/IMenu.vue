@@ -9,15 +9,15 @@
       </a-menu-item>
     </a-menu>
     <drawer :visible="drawerVisible" @visibleChange="visibleChange" />
-    <point v-if="isDebug" :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
+    <point-page v-if="isDebug" :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
 <script>
 import Drawer from "../drawer/Drawer";
-import Point from "@/components/buriedPoint/BuriedPoint";
+import PointPage from "@/components/buriedPoint/PointPage";
 import { mapState } from "vuex";
 export default {
-  components: { Drawer, Point },
+  components: { Drawer, PointPage },
   props: {
     options: {
       type: Array,

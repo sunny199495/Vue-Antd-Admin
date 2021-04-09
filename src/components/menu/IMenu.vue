@@ -9,13 +9,15 @@
       </a-menu-item>
     </a-menu>
     <drawer :visible="drawerVisible" @visibleChange="visibleChange" />
+    <point :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
 <script>
 import Drawer from "../drawer/Drawer";
+import Point from "@/components/buriedPoint/BuriedPoint";
 import { mapState } from "vuex";
 export default {
-  components: { Drawer },
+  components: { Drawer, Point },
   props: {
     options: {
       type: Array,
@@ -36,6 +38,8 @@ export default {
     return {
       pathKey: 1,
       drawerVisible: false,
+      isSwitch: false,
+      currentPagePath: null,
     };
   },
   computed: {
@@ -53,9 +57,14 @@ export default {
   },
   methods: {
     pathChange(item) {
+      this.isSwitch = true;
+      this.currentPagePath = item.fullPath;
       if (item.fullPath == "/meaasge/list") {
         this.drawerVisible = true;
       }
+    },
+    pageChange(val) {
+      this.isSwitch = val;
     },
     visibleChange(val) {
       this.drawerVisible = val;

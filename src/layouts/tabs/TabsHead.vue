@@ -16,15 +16,18 @@
       </a-tab-pane>
     </a-tabs>
     <div v-if="affixed" class="virtual-tabs"></div>
+    <point :isSwitch="isSwitch" :isRefresh="isRefresh" :isClose="isClose" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
 import { getI18nKey } from "@/utils/routerUtil";
+import Point from "@/components/buriedPoint/BuriedPoint";
 
 export default {
   name: "TabsHead",
+  components: { Point },
   i18n: {
     messages: {
       CN: {
@@ -49,6 +52,10 @@ export default {
   data() {
     return {
       affixed: false,
+      isSwitch: false,
+      isRefresh: false,
+      isClose: false,
+      currentPagePath: null,
     };
   },
   inject: ["adminLayout"],
@@ -80,13 +87,24 @@ export default {
     onTabClick(key) {
       if (this.active !== key) {
         this.$emit("change", key);
+        this.isSwitch = true;
+        this.currentPagePath = key;
       }
+    },
+    pageChange(val) {
+      this.isSwitch = val;
+      this.isClose = val;
+      this.isRefresh = val;
     },
     onClose(key) {
       this.$emit("close", key);
+      this.isClose = true;
+      this.currentPagePath = key;
     },
     onRefresh(page) {
       this.$emit("refresh", page.fullPath, page);
+      this.isRefresh = true;
+      this.currentPagePath = page.fullPath;
     },
     onContextmenu(pageKey, e) {
       this.$emit("contextmenu", pageKey, e);

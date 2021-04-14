@@ -1,9 +1,9 @@
 <template>
   <div :class="['tabs-head', headerTheme, layout, pageWidth]">
     <a-tabs type="editable-card" :class="['tabs-container', layout, pageWidth, { affixed: affixed, 'fixed-header': fixedHeader, collapsed: adminLayout.collapsed }]" :active-key="active" :hide-add="true">
-      <a-tooltip placement="left" slot="tabBarExtraContent">
+      <!-- <a-tooltip placement="left" slot="tabBarExtraContent">
         <a-icon class="header-fullscreen" type="more" />
-      </a-tooltip>
+      </a-tooltip> -->
       <a-tooltip placement="left" :title="fullscreenTitle" slot="tabBarExtraContent">
         <a-icon class="header-fullscreen" @click="onFullscreenClick" :type="affixed ? 'fullscreen-exit' : 'fullscreen'" />
       </a-tooltip>
@@ -168,6 +168,7 @@ export default {
     font-size: 18px;
     cursor: pointer;
     color: @primary-3;
+    margin-right: 10px;
     &:hover {
       color: @primary-color;
     }

@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Model1 from "./model1";
-import Model2 from "./model2";
-import Model3 from "./model3";
+import Model1 from "./Model1";
+import Model2 from "./Model2";
+import Model3 from "./Model3";
 
 export default {
   props: {

@@ -2,22 +2,28 @@
   <div>
     <a-menu :default-selected-keys="[pathKey]" mode="inline" :theme="theme" :inline-collapsed="collapsed">
       <a-menu-item v-for="(item, index) in options" :key="index" @click="pathChange(item)">
-        <router-link :to="item.fullPath">
+        <router-link :to="item.fullPath" v-if="item.fullPath != '/meaasge/list'">
           <a-icon :type="item.meta.icon" />
           <span>{{ item.name }}</span>
         </router-link>
+        <div v-else>
+          <a-icon :type="item.meta.icon" />
+          <span>{{ item.name }}</span>
+        </div>
       </a-menu-item>
     </a-menu>
     <drawer :visible="drawerVisible" @visibleChange="visibleChange" />
+    <modal :visible="modalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
     <point-page v-if="isDebug" :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
 <script>
 import Drawer from "../drawer/Drawer";
+import Modal from "../modal/Modal";
 import PointPage from "@/components/buriedPoint/PointPage";
 import { mapState } from "vuex";
 export default {
-  components: { Drawer, PointPage },
+  components: { Drawer, PointPage, Modal },
   props: {
     options: {
       type: Array,
@@ -41,6 +47,7 @@ export default {
       isSwitch: false,
       currentPagePath: null,
       isDebug: false,
+      modalVisible: false,
     };
   },
   computed: {
@@ -64,7 +71,7 @@ export default {
       this.isSwitch = true;
       this.currentPagePath = item.fullPath;
       if (item.fullPath == "/meaasge/list") {
-        this.drawerVisible = true;
+        this.modalVisible = true;
       }
     },
     pageChange(val) {
@@ -72,6 +79,7 @@ export default {
     },
     visibleChange(val) {
       this.drawerVisible = val;
+      this.modalVisible = val;
     },
   },
 };

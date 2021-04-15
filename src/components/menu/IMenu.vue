@@ -61,12 +61,11 @@ export default {
   },
   methods: {
     pathChange(item) {
-      console.log(item);
       this.isSwitch = true;
       this.currentPagePath = item.fullPath;
       if (item.path == "message") {
         this.messageModalVisible = true;
-      } else if (item.path == "dashboard/workplace") {
+      } else if (item.path == "module") {
         this.workModalVisible = true;
       }
     },

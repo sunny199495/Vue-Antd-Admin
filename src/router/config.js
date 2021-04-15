@@ -1,6 +1,6 @@
 import TabsView from "@/layouts/tabs/TabsView";
-// import BlankView from "@/layouts/BlankView";
-// import PageView from "@/layouts/PageView";
+import BlankView from "@/layouts/BlankView";
+import PageView from "@/layouts/PageView";
 
 // 路由配置
 const options = {
@@ -24,19 +24,35 @@ const options = {
       path: "/",
       name: "首页",
       component: TabsView,
-      redirect: "/dashboard/workplace",
+      redirect: "/module/workplace",
       children: [
         {
-          path: "dashboard/workplace",
-          name: "工作台",
-          meta: { icon: "dashboard", page: { closable: false } },
-          component: () => import("@/pages/dashboard/workplace/WorkPlace"),
+          path: "module",
+          name: "功能模块",
+          redirect: "/module/workplace",
+          meta: { icon: "dashboard" },
+          component: BlankView,
+          children: [
+            {
+              path: "workplace",
+              name: "工作台",
+              meta: { icon: "dashboard", page: { closable: false } },
+              component: () => import("@/pages/workplace/WorkPlace"),
+            },
+            {
+              path: "dataCenter",
+              name: "数据中心",
+              meta: { icon: "read" },
+              component: () => import("../pages/dataCenter/DataCenter"),
+            },
+          ],
         },
         {
           path: "message",
           name: "消息中心",
           meta: { icon: "bell" },
           redirect: "/message/list",
+          component: PageView,
           children: [
             {
               path: "list",

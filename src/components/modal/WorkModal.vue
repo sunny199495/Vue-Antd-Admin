@@ -1,15 +1,24 @@
 <template>
   <a-modal :closable="false" :visible="visible" :footer="null" @cancel="handleCancel" :width="300" :class="['WorkModal', sideLeft]">
-    <div>123</div>
+    <div class="module">
+      <a-row>
+        <a-col :span="12" v-for="(item, index) in options.children" :key="index" @click="pathChange(item)">
+          <a-icon :type="item.meta.icon" />
+          <div class="text">{{ item.name }}</div>
+        </a-col>
+      </a-row>
+    </div>
   </a-modal>
 </template>
 
 <script>
+import options from "../../router/config";
 export default {
   props: ["visible", "collapsed"],
   data() {
     return {
       left: "80",
+      options: null,
       list: [
         { modelId: 1, title: "11111", content: "111111" },
         { modelId: 2, title: "22222", content: "222222" },
@@ -33,10 +42,25 @@ export default {
       }
     },
   },
+  created() {
+    options.routes.forEach((element) => {
+      if (element.path == "/") {
+        element.children.forEach((ele) => {
+          if (ele.path == "module") {
+            this.options = ele;
+          }
+        });
+      }
+    });
+  },
   methods: {
     handleCancel() {
       this.modalVisible = false;
       this.$emit("visibleChange", this.modalVisible);
+    },
+    pathChange(item) {
+      this.handleCancel();
+      this.$router.push(item.fullPath);
     },
   },
 };
@@ -49,6 +73,31 @@ export default {
     top: 50px;
     .ant-modal-body {
       padding: 10px;
+    }
+  }
+  .module {
+    text-align: center;
+    .ant-row {
+      .ant-col {
+        padding: 20px;
+        border-radius: 4px;
+        .anticon {
+          font-size: 40px;
+          color: @primary-color;
+        }
+        .text {
+          font-weight: bold;
+        }
+        &:hover {
+          background: @primary-color;
+          .anticon {
+            color: @layout-body-background;
+          }
+          .text {
+            color: @layout-body-background;
+          }
+        }
+      }
     }
   }
 }

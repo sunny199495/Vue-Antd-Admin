@@ -24,11 +24,7 @@ const routerMap = {
   },
   workplace: {
     name: "工作台",
-    component: () => import("@/pages/dashboard/workplace/WorkPlace"),
-  },
-  analysis: {
-    name: "分析页",
-    component: () => import("@/pages/dashboard/analysis/Analysis"),
+    component: () => import("@/pages/workplace/WorkPlace"),
   },
 };
 export default routerMap;

@@ -55,7 +55,7 @@
           <a-icon class="icon" type="alipay-circle" />
           <a-icon class="icon" type="taobao-circle" />
           <a-icon class="icon" type="weibo-circle" />
-          <router-link style="float: right" to="/dashboard/workplace">注册账户</router-link>
+          <router-link style="float: right" to="/module/workplace">注册账户</router-link>
         </div>
       </a-form>
     </div>
@@ -110,7 +110,7 @@ export default {
         getRoutesConfig().then((result) => {
           const routesConfig = result.data.data;
           loadRoutes(routesConfig);
-          this.$router.push("/dashboard/workplace");
+          this.$router.push("/module/workplace");
           this.$message.success(loginRes.message, 3);
           if (this.$ls.get("isDebug").isDebug) {
             console.log(`登陆成功，登陆时间：${this.$currentTime()}`);

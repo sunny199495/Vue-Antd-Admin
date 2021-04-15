@@ -1,29 +1,27 @@
 <template>
   <div>
-    <a-menu :default-selected-keys="[pathKey]" mode="inline" :theme="theme" :inline-collapsed="collapsed">
+    <a-menu mode="inline" :theme="theme" :inline-collapsed="collapsed">
       <a-menu-item v-for="(item, index) in options" :key="index" @click="pathChange(item)">
-        <router-link :to="item.fullPath" v-if="item.fullPath != '/meaasge/list'">
-          <a-icon :type="item.meta.icon" />
-          <span>{{ item.name }}</span>
-        </router-link>
-        <div v-else>
+        <div>
           <a-icon :type="item.meta.icon" />
           <span>{{ item.name }}</span>
         </div>
       </a-menu-item>
     </a-menu>
     <drawer :visible="drawerVisible" @visibleChange="visibleChange" />
-    <modal :visible="modalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
+    <message-modal :visible="messageModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
+    <work-modal :visible="workModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
     <point-page v-if="isDebug" :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
 <script>
 import Drawer from "../drawer/Drawer";
-import Modal from "../modal/Modal";
+import MessageModal from "../modal/MessageModal";
+import WorkModal from "../modal/WorkModal";
 import PointPage from "@/components/buriedPoint/PointPage";
 import { mapState } from "vuex";
 export default {
-  components: { Drawer, PointPage, Modal },
+  components: { Drawer, PointPage, MessageModal, WorkModal },
   props: {
     options: {
       type: Array,
@@ -42,12 +40,12 @@ export default {
   },
   data() {
     return {
-      pathKey: 1,
       drawerVisible: false,
       isSwitch: false,
       currentPagePath: null,
       isDebug: false,
-      modalVisible: false,
+      messageModalVisible: false,
+      workModalVisible: false,
     };
   },
   computed: {
@@ -57,21 +55,19 @@ export default {
     ...mapState("setting", ["menu"]),
   },
   created() {
-    this.options.forEach((element, index) => {
-      if (element.fullPath == this.$route.fullPath) {
-        this.pathKey = index;
-      }
-    });
     if (this.$ls.get("isDebug")) {
       this.isDebug = this.$ls.get("isDebug").isDebug;
     }
   },
   methods: {
     pathChange(item) {
+      console.log(item);
       this.isSwitch = true;
       this.currentPagePath = item.fullPath;
-      if (item.fullPath == "/meaasge/list") {
-        this.modalVisible = true;
+      if (item.path == "message") {
+        this.messageModalVisible = true;
+      } else if (item.path == "dashboard/workplace") {
+        this.workModalVisible = true;
       }
     },
     pageChange(val) {
@@ -79,8 +75,15 @@ export default {
     },
     visibleChange(val) {
       this.drawerVisible = val;
-      this.modalVisible = val;
+      this.messageModalVisible = val;
+      this.workModalVisible = val;
     },
   },
 };
 </script>
+<style lang="less">
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+  background: none;
+}
+</style>

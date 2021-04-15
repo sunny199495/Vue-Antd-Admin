@@ -21,34 +21,10 @@ const options = {
       component: () => import("@/pages/exception/403"),
     },
     {
-      path: "/message",
-      name: "消息中心",
-      component: TabsView,
-      redirect: "/login",
-      children: [
-        {
-          path: "list",
-          name: "消息列表",
-          meta: {
-            icon: "dashboard",
-          },
-          component: () => import("@/pages/message/list"),
-        },
-        {
-          path: "detail",
-          name: "消息详情",
-          meta: {
-            icon: "dashboard",
-          },
-          component: () => import("@/pages/message/detail"),
-        },
-      ],
-    },
-    {
       path: "/",
       name: "首页",
       component: TabsView,
-      redirect: "/login",
+      redirect: "/dashboard/workplace",
       children: [
         {
           path: "dashboard/workplace",
@@ -57,16 +33,28 @@ const options = {
           component: () => import("@/pages/dashboard/workplace/WorkPlace"),
         },
         {
-          path: "meaasge/list",
+          path: "message",
           name: "消息中心",
           meta: { icon: "bell" },
-          component: () => import("@/pages/message/list.vue"),
-        },
-        {
-          path: "buriedPoint",
-          name: "埋点demo",
-          meta: { icon: "more" },
-          component: () => import("@/pages/buriedPoint/BuriedPoint.vue"),
+          redirect: "/message/list",
+          children: [
+            {
+              path: "list",
+              name: "消息列表",
+              meta: {
+                icon: "dashboard",
+              },
+              component: () => import("@/pages/message/list"),
+            },
+            {
+              path: "detail",
+              name: "消息详情",
+              meta: {
+                icon: "dashboard",
+              },
+              component: () => import("@/pages/message/detail"),
+            },
+          ],
         },
       ],
     },

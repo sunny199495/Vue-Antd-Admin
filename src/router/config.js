@@ -43,7 +43,7 @@ const options = {
               path: "dataCenter",
               name: "数据中心",
               meta: { icon: "read" },
-              component: () => import("../pages/dataCenter/DataCenter"),
+              component: () => import("@/pages/dataCenter/dataCenter"),
             },
           ],
         },

@@ -30,17 +30,13 @@ const options = {
         {
           path: "list",
           name: "安全报告列表",
-          meta: {
-            icon: "dashboard",
-          },
+          meta: { icon: "dashboard", page: { closable: true, openNewtab: false } },
           component: () => import("@/pages/safeReport/list"),
         },
         {
           path: "detail",
           name: "安全报告详情",
-          meta: {
-            icon: "dashboard",
-          },
+          meta: { icon: "dashboard", page: { closable: true, openNewtab: false } },
           component: () => import("@/pages/safeReport/detail"),
         },
       ],
@@ -61,13 +57,13 @@ const options = {
             {
               path: "workplace",
               name: "工作台",
-              meta: { icon: "dashboard", page: { closable: false } },
+              meta: { icon: "dashboard", page: { closable: false, openNewtab: true } },
               component: () => import("@/pages/workplace/WorkPlace"),
             },
             {
               path: "dataCenter",
               name: "数据中心",
-              meta: { icon: "read" },
+              meta: { icon: "read", page: { closable: true, openNewtab: true } },
               component: () => import("@/pages/dataCenter/dataCenter"),
             },
           ],
@@ -82,17 +78,13 @@ const options = {
             {
               path: "list",
               name: "消息列表",
-              meta: {
-                icon: "dashboard",
-              },
+              meta: { icon: "dashboard", page: { closable: true, openNewtab: true } },
               component: () => import("@/pages/message/list"),
             },
             {
               path: "detail",
               name: "消息详情",
-              meta: {
-                icon: "dashboard",
-              },
+              meta: { icon: "dashboard", page: { closable: true, openNewtab: true } },
               component: () => import("@/pages/message/detail"),
             },
           ],

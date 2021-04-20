@@ -40,15 +40,17 @@ export default {
     this.loadCacheConfig(this.$router?.options?.routes);
     this.loadCachedTabs();
     const route = this.$route;
-    if (this.pageList.findIndex((item) => item.fullPath === route.fullPath) === -1) {
-      this.pageList.push(this.createPage(route));
-    }
-    this.activePage = route.fullPath;
-    if (this.multiPage) {
-      this.$nextTick(() => {
-        this.setCachedKey(route);
-      });
-      this.addListener();
+    if (route.meta.page.openNewtab) {
+      if (this.pageList.findIndex((item) => item.fullPath === route.fullPath) === -1) {
+        this.pageList.push(this.createPage(route));
+      }
+      this.activePage = route.fullPath;
+      if (this.multiPage) {
+        this.$nextTick(() => {
+          this.setCachedKey(route);
+        });
+        this.addListener();
+      }
     }
   },
   mounted() {
@@ -65,15 +67,17 @@ export default {
     },
     $route: function(newRoute) {
       this.activePage = newRoute.fullPath;
-      if (!this.multiPage) {
-        this.pageList = [this.createPage(newRoute)];
-      } else if (this.pageList.findIndex((item) => item.fullPath === newRoute.fullPath) === -1) {
-        this.pageList.push(this.createPage(newRoute));
-      }
-      if (this.multiPage) {
-        this.$nextTick(() => {
-          this.setCachedKey(newRoute);
-        });
+      if (newRoute.meta.page.openNewtab) {
+        if (!this.multiPage) {
+          this.pageList = [this.createPage(newRoute)];
+        } else if (this.pageList.findIndex((item) => item.fullPath === newRoute.fullPath) === -1) {
+          this.pageList.push(this.createPage(newRoute));
+        }
+        if (this.multiPage) {
+          this.$nextTick(() => {
+            this.setCachedKey(newRoute);
+          });
+        }
       }
     },
     multiPage: function(newVal) {

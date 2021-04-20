@@ -1,50 +1,43 @@
 <template>
   <page-layout>
-    <a-button type="primary" @click="add"><point-button :addButton="addButton" @change="change" />新增</a-button>
-    <a-button type="" @click="edit"><point-button :editButton="editButton" @change="change" />编辑</a-button>
-    <a-button type="" @click="detail"><point-button :detailButton="detailButton" @change="change" />详情</a-button>
-    <a-button type="danger" @click="del"><point-button :delButton="delButton" @change="change" />删除</a-button>
+    <a-row>
+      <a-col :span="6" @click="moduleCome" class="module">
+        <a-icon type="read" />
+        <div>安全报告</div>
+      </a-col>
+    </a-row>
   </page-layout>
 </template>
 
 <script>
 import PageLayout from "@/layouts/PageLayout";
-import PointButton from "@/components/buriedPoint/PointButton";
 export default {
-  components: { PageLayout, PointButton },
-  data() {
-    return {
-      addButton: false,
-      editButton: false,
-      detailButton: false,
-      delButton: false,
-    };
-  },
+  components: { PageLayout },
   methods: {
-    change() {
-      this.addButton = false;
-      this.editButton = false;
-      this.detailButton = false;
-      this.delButton = false;
-    },
-    add() {
-      this.addButton = true;
-    },
-    edit() {
-      this.editButton = true;
-    },
-    detail() {
-      this.detailButton = true;
-    },
-    del() {
-      this.delButton = true;
+    moduleCome() {
+      this.$router.push("/safeReport/list");
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.ant-btn {
-  margin: 10px;
+.module {
+  text-align: center;
+  background: @body-background;
+  padding: 20px;
+  .anticon {
+    font-size: 30px;
+    color: @primary-color;
+  }
+  &:hover {
+    background: @primary-color;
+    .anticon {
+      color: @body-background;
+    }
+    > div {
+      color: @body-background;
+    }
+  }
 }
 </style>

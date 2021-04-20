@@ -21,6 +21,31 @@ const options = {
       component: () => import("@/pages/exception/403"),
     },
     {
+      path: "safeReport",
+      name: "安全报告",
+      meta: { icon: "bell" },
+      redirect: "/safeReport/list",
+      component: TabsView,
+      children: [
+        {
+          path: "list",
+          name: "安全报告列表",
+          meta: {
+            icon: "dashboard",
+          },
+          component: () => import("@/pages/safeReport/list"),
+        },
+        {
+          path: "detail",
+          name: "安全报告详情",
+          meta: {
+            icon: "dashboard",
+          },
+          component: () => import("@/pages/safeReport/detail"),
+        },
+      ],
+    },
+    {
       path: "/",
       name: "首页",
       component: TabsView,

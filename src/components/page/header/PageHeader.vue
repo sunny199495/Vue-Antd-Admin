@@ -10,9 +10,9 @@
             </a-breadcrumb-item>
           </a-breadcrumb>
         </div>
-        <div class="tabs">
+        <!-- <div class="tabs">
           <div class="tab" :class="tabActive.id == item.id ? 'tabActive' : ''" v-for="(item, index) in tabList" :key="index" @click="tabChange(item)">{{ item.value }}</div>
-        </div>
+        </div> -->
         <div class="setting">
           <a-icon type="setting" />
           <span>应用配置</span>
@@ -24,9 +24,9 @@
         <a-breadcrumb-item :key="index" v-for="(item, index) in breadcrumb">
           <span>{{ item }}</span>
         </a-breadcrumb-item>
-        <a-breadcrumb-item>
+        <!-- <a-breadcrumb-item>
           <span>{{ tabActive.value }}</span>
-        </a-breadcrumb-item>
+        </a-breadcrumb-item> -->
       </a-breadcrumb>
     </div>
     <point-page v-if="isDebug" :isFirst="isFirst" @pageChange="pageChange" />

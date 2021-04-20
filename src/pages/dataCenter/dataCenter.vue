@@ -15,7 +15,7 @@ export default {
   components: { PageLayout },
   methods: {
     moduleCome() {
-      this.$router.push("/safeReport/list");
+      this.$router.push("/safeReportList");
     },
   },
 };

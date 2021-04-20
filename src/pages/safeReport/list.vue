@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     detail() {
-      this.$router.push("/safeReport/detail");
+      this.$router.push("/safeReportDetail");
     },
   },
 };

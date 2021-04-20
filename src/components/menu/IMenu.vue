@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-menu mode="inline" :theme="theme" :inline-collapsed="collapsed">
-      <a-menu-item v-for="(item, index) in options" :key="index" @click="pathChange(item)">
+      <a-menu-item v-for="(item, index) in menuData" :key="index" @click="pathChange(item)" v-show="item.meta.page.navShow">
         <div>
           <a-icon :type="item.meta.icon" />
           <span>{{ item.name }}</span>
@@ -19,7 +19,7 @@ import Drawer from "../drawer/Drawer";
 import MessageModal from "../modal/MessageModal";
 import WorkModal from "../modal/WorkModal";
 import PointPage from "@/components/buriedPoint/PointPage";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   components: { Drawer, PointPage, MessageModal, WorkModal },
   props: {
@@ -53,6 +53,7 @@ export default {
       return this.theme == "light" ? this.theme : "dark";
     },
     ...mapState("setting", ["menu"]),
+    ...mapGetters("setting", ["menuData"]),
   },
   created() {
     if (this.$ls.get("isDebug")) {
@@ -65,7 +66,7 @@ export default {
       this.currentPagePath = item.fullPath;
       if (item.path == "message") {
         this.messageModalVisible = true;
-      } else if (item.path == "module") {
+      } else if (item.path == "workplace") {
         this.workModalVisible = true;
       }
     },

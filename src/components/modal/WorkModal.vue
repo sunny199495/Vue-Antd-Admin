@@ -2,7 +2,7 @@
   <a-modal :closable="false" :visible="visible" :footer="null" @cancel="handleCancel" :width="300" :class="['WorkModal', sideLeft]">
     <div class="module">
       <a-row>
-        <a-col :span="12" v-for="(item, index) in options.children" :key="index" @click="pathChange(item)">
+        <a-col :span="12" v-for="(item, index) in menuData" :key="index" @click="pathChange(item)" v-show="item.meta.page.workModal">
           <a-icon :type="item.meta.icon" />
           <div class="text">{{ item.name }}</div>
         </a-col>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import options from "../../router/config";
+import { mapGetters } from "vuex";
 export default {
   props: ["visible", "collapsed"],
   data() {
@@ -29,6 +29,7 @@ export default {
     sideLeft() {
       return this.collapsed ? "" : "sideLeft";
     },
+    ...mapGetters("setting", ["menuData"]),
   },
   watch: {
     visible(val) {
@@ -41,17 +42,6 @@ export default {
         this.left = "200";
       }
     },
-  },
-  created() {
-    options.routes.forEach((element) => {
-      if (element.path == "/") {
-        element.children.forEach((ele) => {
-          if (ele.path == "module") {
-            this.options = ele;
-          }
-        });
-      }
-    });
   },
   methods: {
     handleCancel() {

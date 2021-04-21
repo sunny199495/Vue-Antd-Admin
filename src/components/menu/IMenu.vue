@@ -11,6 +11,7 @@
     <drawer :visible="drawerVisible" @visibleChange="visibleChange" />
     <message-modal :visible="messageModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
     <work-modal :visible="workModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
+    <favorites-modal :visible="favoritesModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
     <point-page v-if="isDebug" :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
 </template>
@@ -18,10 +19,11 @@
 import Drawer from "../drawer/Drawer";
 import MessageModal from "../modal/MessageModal";
 import WorkModal from "../modal/WorkModal";
+import FavoritesModal from "../modal/FavoritesModal";
 import PointPage from "@/components/buriedPoint/PointPage";
 import { mapState, mapGetters } from "vuex";
 export default {
-  components: { Drawer, PointPage, MessageModal, WorkModal },
+  components: { Drawer, PointPage, MessageModal, WorkModal, FavoritesModal },
   props: {
     options: {
       type: Array,
@@ -46,6 +48,7 @@ export default {
       isDebug: false,
       messageModalVisible: false,
       workModalVisible: false,
+      favoritesModalVisible: false,
     };
   },
   computed: {
@@ -68,6 +71,8 @@ export default {
         this.messageModalVisible = true;
       } else if (item.path == "workplace") {
         this.workModalVisible = true;
+      } else if (item.path == "favorites") {
+        this.favoritesModalVisible = true;
       }
     },
     pageChange(val) {
@@ -77,6 +82,7 @@ export default {
       this.drawerVisible = val;
       this.messageModalVisible = val;
       this.workModalVisible = val;
+      this.favoritesModalVisible = val;
     },
   },
 };

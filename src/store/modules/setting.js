@@ -17,6 +17,7 @@ export default {
     palettes: ADMIN.palettes,
     pageMinHeight: 0,
     menuData: [],
+    breadcrumbData: [1, 2, 3],
     activatedFirst: undefined,
     customTitles,
     ...config,
@@ -56,6 +57,9 @@ export default {
     },
     setNotice(state, isNotice) {
       state.isNotice = isNotice;
+    },
+    setBreadcrumbData(state, breadcrumbData) {
+      state.breadcrumbData = breadcrumbData;
     },
     setTheme(state, theme) {
       state.theme = theme;

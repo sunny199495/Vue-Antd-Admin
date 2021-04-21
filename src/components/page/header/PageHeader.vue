@@ -5,7 +5,7 @@
         <img class="img" src="https://img95.699pic.com/photo/50061/6284.jpg_wh300.jpg" />
         <div class="breadcrumb">
           <a-breadcrumb separator=">">
-            <a-breadcrumb-item :key="index" v-for="(item, index) in breadcrumb">
+            <a-breadcrumb-item :key="index" v-for="(item, index) in breadcrumbData">
               <span>{{ item }}</span>
             </a-breadcrumb-item>
           </a-breadcrumb>
@@ -21,12 +21,9 @@
     </div>
     <div class="breadcrumb">
       <a-breadcrumb separator=">">
-        <a-breadcrumb-item :key="index" v-for="(item, index) in breadcrumb">
+        <a-breadcrumb-item :key="index" v-for="(item, index) in breadcrumbData">
           <span>{{ item }}</span>
         </a-breadcrumb-item>
-        <!-- <a-breadcrumb-item>
-          <span>{{ tabActive.value }}</span>
-        </a-breadcrumb-item> -->
       </a-breadcrumb>
     </div>
     <point-page v-if="isDebug" :isFirst="isFirst" @pageChange="pageChange" />
@@ -35,7 +32,7 @@
 
 <script>
 import PointPage from "../../buriedPoint/PointPage";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "PageHeader",
   components: { PointPage },
@@ -82,9 +79,15 @@ export default {
     };
   },
   computed: {
-    ...mapState("setting", ["layout", "showPageTitle", "pageWidth"]),
+    ...mapState("setting", ["layout", "showPageTitle", "pageWidth", "breadcrumbData"]),
+  },
+  watch: {
+    $route() {
+      this.setBreadcrumbData(this.$route.meta.page.breadcrumb);
+    },
   },
   created() {
+    this.setBreadcrumbData(this.$route.meta.page.breadcrumb);
     if (this.$ls.get("isDebug")) {
       this.isDebug = this.$ls.get("isDebug").isDebug;
       setTimeout(() => {
@@ -93,6 +96,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations("setting", ["setBreadcrumbData"]),
     tabChange(item) {
       this.tabActive = item;
       // this.isFirst = true;

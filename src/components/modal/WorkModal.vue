@@ -2,7 +2,7 @@
   <a-modal :closable="false" :visible="visible" :footer="null" @cancel="handleCancel" :width="300" :class="['WorkModal', sideLeft]">
     <div class="module">
       <a-row>
-        <a-col :span="12" v-for="(item, index) in menuData" :key="index" @click="pathChange(item)" v-show="item.meta.page.workModal">
+        <a-col :span="12" v-for="(item, index) in workList" :key="index" @click="pathChange(item)">
           <a-icon :type="item.meta.icon" />
           <div class="text">{{ item.name }}</div>
         </a-col>
@@ -12,9 +12,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
-  props: ["visible", "collapsed"],
+  props: ["visible", "collapsed", "workList"],
   data() {
     return {
       left: "80",
@@ -29,7 +28,6 @@ export default {
     sideLeft() {
       return this.collapsed ? "" : "sideLeft";
     },
-    ...mapGetters("setting", ["menuData"]),
   },
   watch: {
     visible(val) {
@@ -50,7 +48,7 @@ export default {
     },
     pathChange(item) {
       this.handleCancel();
-      this.$router.push(item.fullPath);
+      this.$router.push(item.path);
     },
   },
 };

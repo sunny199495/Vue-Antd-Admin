@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-menu mode="inline" :theme="theme" :inline-collapsed="collapsed">
-      <a-menu-item v-for="(item, index) in menuData" :key="index" @click="pathChange(item)" v-show="item.meta.page.navShow">
+      <a-menu-item v-for="(item, index) in routesConfigData.routes" :key="index" @click="pathChange(item)" v-show="item.meta.page.navShow">
         <div>
           <a-icon :type="item.meta.icon" />
           <span>{{ item.name }}</span>
@@ -10,7 +10,7 @@
     </a-menu>
     <drawer :visible="drawerVisible" @visibleChange="visibleChange" />
     <message-modal :visible="messageModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
-    <work-modal :visible="workModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
+    <work-modal :workList="workList" :visible="workModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
     <favorites-modal :visible="favoritesModalVisible" :collapsed="collapsed" @visibleChange="visibleChange" />
     <point-page v-if="isDebug" :isSwitch="isSwitch" :currentPagePath="currentPagePath" @pageChange="pageChange" />
   </div>
@@ -21,7 +21,8 @@ import MessageModal from "../modal/MessageModal";
 import WorkModal from "../modal/WorkModal";
 import FavoritesModal from "../modal/FavoritesModal";
 import PointPage from "@/components/buriedPoint/PointPage";
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
+import { GetRoutesConfig } from "@/api/mock";
 export default {
   components: { Drawer, PointPage, MessageModal, WorkModal, FavoritesModal },
   props: {
@@ -49,6 +50,8 @@ export default {
       messageModalVisible: false,
       workModalVisible: false,
       favoritesModalVisible: false,
+      routesConfigData: [],
+      workList: [],
     };
   },
   computed: {
@@ -56,22 +59,36 @@ export default {
       return this.theme == "light" ? this.theme : "dark";
     },
     ...mapState("setting", ["menu"]),
-    ...mapGetters("setting", ["menuData"]),
   },
   created() {
+    this.getRoutesConfig();
+
     if (this.$ls.get("isDebug")) {
       this.isDebug = this.$ls.get("isDebug").isDebug;
     }
   },
   methods: {
+    getRoutesConfig() {
+      // 获取路由配置
+      GetRoutesConfig()
+        .then((res) => {
+          if (res.data.code == 200) {
+            this.routesConfigData = res.data.data;
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     pathChange(item) {
       this.isSwitch = true;
       this.currentPagePath = item.fullPath;
-      if (item.path == "message") {
+      if (item.path == "/message") {
         this.messageModalVisible = true;
-      } else if (item.path == "workplace") {
+      } else if (item.path == "/workplace") {
         this.workModalVisible = true;
-      } else if (item.path == "favorites") {
+        this.workList = item.children;
+      } else if (item.path == "/favorites") {
         this.favoritesModalVisible = true;
       }
     },

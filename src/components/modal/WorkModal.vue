@@ -12,16 +12,14 @@
 </template>
 
 <script>
+import { GetModule } from "@/api/mock";
+
 export default {
-  props: ["visible", "collapsed", "workList"],
+  props: ["visible", "collapsed"],
   data() {
     return {
       left: "80",
-      options: null,
-      list: [
-        { modelId: 1, title: "11111", content: "111111" },
-        { modelId: 2, title: "22222", content: "222222" },
-      ],
+      workList: [],
     };
   },
   computed: {
@@ -32,6 +30,9 @@ export default {
   watch: {
     visible(val) {
       this.modalVisible = val;
+      if (val) {
+        this.getModule();
+      }
     },
     collapsed(val) {
       if (val) {
@@ -48,7 +49,13 @@ export default {
     },
     pathChange(item) {
       this.handleCancel();
-      this.$router.push(item.path);
+      this.$router.push(item.fullPath);
+    },
+    async getModule() {
+      const res = await GetModule();
+      if (res.data.code == 200) {
+        this.workList = res.data.data.routes;
+      }
     },
   },
 };

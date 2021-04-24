@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-menu mode="inline" :theme="theme" :inline-collapsed="collapsed">
-      <a-menu-item v-for="(item, index) in routesConfigData.routes" :key="index" @click="pathChange(item)" v-show="item.meta.page.navShow">
+      <a-menu-item v-for="(item, index) in routesConfigData.routes" :key="index" @click="pathChange(item)">
         <div>
           <a-icon :type="item.meta.icon" />
           <span>{{ item.name }}</span>
@@ -22,7 +22,7 @@ import WorkModal from "../modal/WorkModal";
 import FavoritesModal from "../modal/FavoritesModal";
 import PointPage from "@/components/buriedPoint/PointPage";
 import { mapState } from "vuex";
-import { GetRoutesConfig } from "@/api/mock";
+import { GetNav } from "@/api/mock";
 export default {
   components: { Drawer, PointPage, MessageModal, WorkModal, FavoritesModal },
   props: {
@@ -61,16 +61,16 @@ export default {
     ...mapState("setting", ["menu"]),
   },
   created() {
-    this.getRoutesConfig();
+    this.getNav();
 
     if (this.$ls.get("isDebug")) {
       this.isDebug = this.$ls.get("isDebug").isDebug;
     }
   },
   methods: {
-    getRoutesConfig() {
+    getNav() {
       // 获取路由配置
-      GetRoutesConfig()
+      GetNav()
         .then((res) => {
           if (res.data.code == 200) {
             this.routesConfigData = res.data.data;
@@ -83,12 +83,12 @@ export default {
     pathChange(item) {
       this.isSwitch = true;
       this.currentPagePath = item.fullPath;
-      if (item.path == "/message") {
+      if (item.path == "message") {
         this.messageModalVisible = true;
-      } else if (item.path == "/workplace") {
+      } else if (item.path == "workplace") {
         this.workModalVisible = true;
         this.workList = item.children;
-      } else if (item.path == "/favorites") {
+      } else if (item.path == "favorites") {
         this.favoritesModalVisible = true;
       }
     },
